@@ -64,9 +64,7 @@
 
 html {
   scroll-behavior: smooth;
-  /* Резервируем место под скроллбар — верстка не дёргается при открытии модалок */
   scrollbar-gutter: stable;
-  /* Firefox: тонкий градиентный скроллбар */
   scrollbar-width: thin;
   scrollbar-color: #00d4ff #0a0a0f;
 }
@@ -104,7 +102,6 @@ html {
   background: var(--bg-primary);
 }
 
-/* Кастомный скроллбар внутри textarea и модалок */
 textarea::-webkit-scrollbar,
 .modal__dialog::-webkit-scrollbar {
   width: 8px;
@@ -321,6 +318,7 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
   align-items: center;
   position: relative;
   z-index: 1;
+  width: 100%;
 }
 
 .hero__badge {
@@ -395,10 +393,17 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
 
 .hero__stat-label { font-size: 0.875rem; color: var(--text-muted); }
 
-.hero__visual { position: relative; animation: fadeInUp 0.8s ease 0.3s both; }
+/* ИСПРАВЛЕНО: width: 100% — чтобы на мобильных блок не схлопывался */
+.hero__visual {
+  position: relative;
+  width: 100%;
+  animation: fadeInUp 0.8s ease 0.3s both;
+}
 
+/* ИСПРАВЛЕНО: width: 100% для растягивания на всю ширину */
 .tv-mockup {
   position: relative;
+  width: 100%;
   border-radius: 20px;
   overflow: hidden;
   border: 1px solid var(--border);
@@ -411,6 +416,7 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
   background: #0a0a0f;
   position: relative;
   overflow: hidden;
+  width: 100%;
 }
 
 .tv-mockup__screen::before {
@@ -1387,7 +1393,14 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
   .hero__inner { grid-template-columns: 1fr; text-align: center; }
   .hero__text { margin-left: auto; margin-right: auto; }
   .hero__actions, .hero__stats { justify-content: center; }
-  .hero__visual { max-width: 500px; margin: 0 auto; }
+
+  /* ИСПРАВЛЕНО: сохраняем width: 100% + ограничиваем max-width */
+  .hero__visual {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
   .floating-card--1 { right: 0; }
   .floating-card--2 { left: 0; }
   .footer__grid { grid-template-columns: 1fr 1fr; gap: 32px; }
@@ -1430,6 +1443,22 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
   .hero__actions { flex-direction: column; width: 100%; }
   .hero__actions .btn { width: 100%; }
   .floating-card { display: none; }
+
+  /* ИСПРАВЛЕНО: на маленьких экранах видео растянуто на всю ширину */
+  .hero__visual {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .tv-mockup {
+    border-radius: 14px;
+  }
+
+  /* Опционально: видео повыше на маленьких экранах */
+  .tv-mockup__screen {
+    aspect-ratio: 16 / 9;
+  }
+
   .footer__grid { grid-template-columns: 1fr; }
   .footer__bottom { flex-direction: column; text-align: center; }
   .modal__head { flex-direction: column; text-align: center; gap: 12px; }
