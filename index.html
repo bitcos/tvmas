@@ -26,10 +26,8 @@
 <meta name="twitter:image" content="https://ip-tv.tech/og-image.jpg">
 
 <!-- Favicon -->
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
 <!-- Hreflang -->
 <link rel="alternate" hreflang="ru" href="https://ip-tv.tech/">
@@ -128,6 +126,7 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
 }
 
 .btn--primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px var(--accent-glow); }
+.btn--primary:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
 
 .btn--secondary {
   background: transparent;
@@ -1188,7 +1187,7 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
       },
       "contactPoint": {
         "@type": "ContactPoint",
-        "telephone": "+7-XX-XXX-XX-XX",
+        "telephone": "+375-XX-XXX-XX-XX",
         "contactType": "customer service",
         "availableLanguage": ["Russian"]
       },
@@ -1790,7 +1789,7 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
 
           <div class="form__group">
             <label class="form__label" for="phone">Телефон <span class="required">*</span></label>
-            <input class="form__input" type="tel" id="phone" name="phone" placeholder="+7 (__) ___-__-__" required>
+            <input class="form__input" type="tel" id="phone" name="phone" placeholder="+375 (__) ___-__-__" required>
           </div>
         </div>
 
@@ -1817,7 +1816,7 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
             class="form__textarea"
             id="messengers"
             name="messengers"
-            placeholder="Telegram: @username · WhatsApp: +7… · VK: vk.com/… · OK: ok.ru/…"
+            placeholder="Telegram: @username · WhatsApp: +375… · VK: vk.com/… · OK: ok.ru/…"
             required></textarea>
           <div class="form__explain">
             <span class="form__explain-icon">💬</span>
@@ -1853,6 +1852,10 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
 </div>
 
 <script>
+// ============ НАСТРОЙКИ ОТПРАВКИ ============
+// URL веб-приложения Google Apps Script (получишь после деплоя)
+const LEAD_ENDPOINT = 'https://script.google.com/macros/s/ВСТАВЬ_СЮДА_ID/exec';
+
 // ============ HEADER SCROLL ============
 const header = document.getElementById('header');
 window.addEventListener('scroll', () => {
@@ -1965,15 +1968,17 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-leadForm.addEventListener('submit', function(e) {
+// ============ ОТПРАВКА ФОРМЫ В GOOGLE SCRIPT → TELEGRAM ============
+leadForm.addEventListener('submit', async function(e) {
   e.preventDefault();
 
   const name = document.getElementById('name');
   const phone = document.getElementById('phone');
   const messengers = document.getElementById('messengers');
+  const submitBtn = this.querySelector('button[type="submit"]');
 
+  // Валидация
   let valid = true;
-
   [name, phone, messengers].forEach(field => {
     field.style.borderColor = '';
     if (!field.value.trim()) {
@@ -1988,6 +1993,7 @@ leadForm.addEventListener('submit', function(e) {
     return;
   }
 
+  // Собираем данные
   const formData = {
     name: name.value.trim(),
     phone: phone.value.trim(),
@@ -1997,28 +2003,39 @@ leadForm.addEventListener('submit', function(e) {
     timestamp: new Date().toISOString()
   };
 
-  // ============================================
-  // ЗДЕСЬ ВАША ИНТЕГРАЦИЯ С BACKEND / CRM / TELEGRAM
-  // ============================================
-  // fetch('/api/lead', {
-  //   method: 'POST',
-  //   headers: { 'Content-Type': 'application/json' },
-  //   body: JSON.stringify(formData)
-  // });
-  //
-  // Или отправка в Telegram через бота:
-  // const text = `Новая заявка TechTV!
-  //   Имя: ${formData.name}
-  //   Телефон: ${formData.phone}
-  //   Устройство: ${formData.device}
-  //   Мессенджеры: ${formData.messengers}`;
-  // fetch(`https://api.telegram.org/bot<TOKEN>/sendMessage?chat_id=<CHAT_ID>&text=${encodeURIComponent(text)}`);
-  // ============================================
+  // Блокируем кнопку и показываем загрузку
+  const originalText = submitBtn.innerHTML;
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = 'Отправка...';
 
-  console.log('Заявка отправлена:', formData);
+  try {
+    const response = await fetch(LEAD_ENDPOINT, {
+      method: 'POST',
+      // ВАЖНО: text/plain, чтобы избежать CORS-preflight
+      // (Apps Script его не обрабатывает). Внутри — обычный JSON.
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(formData)
+    });
 
-  modalFormWrap.style.display = 'none';
-  modalSuccess.classList.add('active');
+    const result = await response.json();
+
+    if (result && result.ok) {
+      // Успех — показываем экран благодарности
+      modalFormWrap.style.display = 'none';
+      modalSuccess.classList.add('active');
+      leadForm.reset();
+    } else {
+      throw new Error((result && result.error) || 'Ошибка отправки');
+    }
+
+  } catch (err) {
+    console.error('Ошибка отправки заявки:', err);
+    alert('Не удалось отправить заявку. Пожалуйста, попробуйте ещё раз или свяжитесь с нами напрямую.');
+  } finally {
+    // Возвращаем кнопку в исходное состояние
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalText;
+  }
 });
 </script>
 
