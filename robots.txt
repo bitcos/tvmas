@@ -1,4 +1,4 @@
-# robots.txt для ip-tv.tech
+# robots.txt для ip-tv.tech (TechTV)
 # Основные поисковые системы
 User-agent: *
 Allow: /
