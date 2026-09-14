@@ -27,7 +27,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">
-  
+
 <style>
 /* ============ RESET & BASE ============ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -49,7 +49,28 @@
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: #00d4ff #0a0a0f;
+}
+
+/* ============ CUSTOM SCROLLBAR ============ */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00d4ff 0%, #7b61ff 100%);
+  border-radius: 100px;
+  border: 2px solid var(--bg-primary);
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #33ddff 0%, #9b7bff 100%);
+  background-clip: padding-box;
+  border: 2px solid var(--bg-primary);
+}
+::-webkit-scrollbar-corner { background: var(--bg-primary); }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Roboto, sans-serif;
@@ -59,6 +80,8 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
+
+body.modal-open { overflow: hidden; }
 
 .container { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
 
@@ -130,6 +153,9 @@ body {
 
 .burger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; }
 .burger span { display: block; width: 24px; height: 2px; background: var(--text-primary); border-radius: 2px; transition: var(--transition); }
+.burger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.burger.active span:nth-child(2) { opacity: 0; }
+.burger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 /* ============ BUTTONS ============ */
 .btn {
@@ -156,6 +182,7 @@ body {
 }
 
 .btn--primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px var(--accent-glow); }
+.btn--primary:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
 
 .btn--secondary {
   background: transparent;
@@ -383,6 +410,373 @@ body {
   color: var(--text-muted);
 }
 
+/* ============ MODAL ============ */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal.active { opacity: 1; visibility: visible; }
+
+.modal__overlay { position: absolute; inset: 0; background: rgba(5, 5, 10, 0.85); backdrop-filter: blur(8px); }
+
+.modal__dialog {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  background: linear-gradient(180deg, #16161f 0%, var(--bg-card) 100%);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px 40px 28px;
+  transform: translateY(20px) scale(0.98);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+}
+
+.modal.active .modal__dialog { transform: translateY(0) scale(1); }
+
+.modal__dialog::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--gradient);
+  border-radius: 20px 20px 0 0;
+  z-index: 2;
+}
+
+.modal__close {
+  position: absolute;
+  top: 14px; right: 14px;
+  width: 34px; height: 34px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 1.125rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  line-height: 1;
+  z-index: 3;
+}
+
+.modal__close:hover { background: var(--bg-card-hover); color: var(--text-primary); transform: rotate(90deg); }
+
+.modal__head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.modal__icon {
+  width: 48px; height: 48px;
+  min-width: 48px;
+  border-radius: 14px;
+  background: var(--gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.375rem;
+  box-shadow: 0 10px 30px var(--accent-glow);
+}
+
+.modal__title {
+  font-size: 1.25rem;
+  margin-bottom: 2px;
+  letter-spacing: -0.02em;
+}
+
+.modal__subtitle {
+  color: var(--text-secondary);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+.form__group { margin-bottom: 14px; }
+
+.form__label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.form__input {
+  width: 100%;
+  height: 46px;
+  padding: 0 14px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-size: 0.9375rem;
+  font-family: inherit;
+  transition: var(--transition);
+  outline: none;
+}
+
+.form__input::placeholder { color: var(--text-muted); }
+
+.form__input:focus {
+  border-color: var(--accent);
+  background: var(--bg-card-hover);
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.15);
+}
+
+.form__submit {
+  width: 100%;
+  margin-top: 8px;
+  height: 50px;
+}
+
+/* ============ LOGIN MODAL ============ */
+.login-modal .modal__dialog {
+  max-width: 440px;
+  padding: 32px 36px 28px;
+}
+
+.login-error {
+  display: none;
+  margin-bottom: 16px;
+  padding: 11px 14px;
+  background: rgba(255, 95, 87, 0.1);
+  border: 1px solid rgba(255, 95, 87, 0.35);
+  border-radius: 10px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #ff5f57;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.login-error.show {
+  display: block;
+  animation: shakeError 0.4s ease;
+}
+
+@keyframes shakeError {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+.login-note {
+  margin-top: 16px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.login-note a { color: var(--accent); text-decoration: none; }
+.login-note a:hover { text-decoration: underline; }
+
+/* ============ FLOATING CHAT BUTTON ============ */
+.chat-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1500;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--gradient);
+  color: #0a0a0f;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 32px var(--accent-glow), 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  text-decoration: none;
+}
+
+.chat-fab:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 12px 40px var(--accent-glow), 0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+.chat-fab:active { transform: scale(0.96); }
+
+.chat-fab__icon { font-size: 1.5rem; line-height: 1; }
+
+.chat-fab__badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 100px;
+  background: #ff3d5c;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 800;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 3px var(--bg-primary);
+  animation: pulseBadge 2s ease-in-out infinite;
+}
+
+.chat-fab__badge.show { display: flex; }
+
+@keyframes pulseBadge {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+/* ============ NOTIFICATION TOAST ============ */
+.chat-notify {
+  position: fixed;
+  top: 88px;
+  right: 24px;
+  z-index: 1600;
+  max-width: 360px;
+  background: linear-gradient(180deg, #1a1a24 0%, #12121a 100%);
+  border: 1px solid rgba(0, 212, 255, 0.4);
+  border-radius: var(--radius-sm);
+  padding: 16px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 212, 255, 0.1);
+  cursor: pointer;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  transform: translateX(120%);
+  pointer-events: none;
+}
+
+.chat-notify.show {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.chat-notify::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--gradient);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+.chat-notify__icon {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 12px;
+  background: var(--gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  color: #0a0a0f;
+  position: relative;
+}
+
+.chat-notify__count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 100px;
+  background: #ff3d5c;
+  color: #fff;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 3px #1a1a24;
+}
+
+.chat-notify__body {
+  flex: 1;
+  min-width: 0;
+  padding-right: 20px;
+}
+
+.chat-notify__title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.chat-notify__title::after {
+  content: 'Новое';
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  background: rgba(0, 212, 255, 0.15);
+  color: var(--accent);
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.chat-notify__text {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.chat-notify__close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  line-height: 1;
+}
+
+.chat-notify__close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
+
 /* ============ RESPONSIVE ============ */
 @media (max-width: 968px) {
   .footer__grid { grid-template-columns: 1fr 1fr; gap: 32px; }
@@ -409,6 +803,8 @@ body {
   .header__actions .btn--secondary { display: none; }
   .blog-list__grid { grid-template-columns: 1fr; }
   .cta__inner { padding: 48px 24px; }
+  .modal__dialog { padding: 28px 22px 24px; }
+  .login-modal .modal__dialog { padding: 28px 22px 24px; }
 }
 
 @media (max-width: 480px) {
@@ -416,6 +812,21 @@ body {
   .footer__grid { grid-template-columns: 1fr; }
   .footer__bottom { flex-direction: column; text-align: center; }
   .pagination__link { min-width: 40px; height: 40px; font-size: 0.875rem; }
+
+  .chat-fab {
+    bottom: 16px;
+    right: 16px;
+    width: 54px;
+    height: 54px;
+  }
+  .chat-fab__icon { font-size: 1.25rem; }
+
+  .chat-notify {
+    top: 76px;
+    left: 16px;
+    right: 16px;
+    max-width: none;
+  }
 }
 
 /* ============ SCROLL REVEAL ============ */
@@ -459,11 +870,12 @@ body {
       <a href="/#pricing" class="nav__link">Тариф</a>
       <a href="/#how" class="nav__link">Как подключить</a>
       <a href="/blog.html" class="nav__link">Блог</a>
+      <a href="/chat.html" class="nav__link">Чат</a>
       <a href="/#faq" class="nav__link">FAQ</a>
     </nav>
 
     <div class="header__actions">
-      <a href="/" class="btn btn--secondary">На главную</a>
+      <button type="button" class="btn btn--secondary" data-login-open>Войти</button>
       <a href="/#pricing" class="btn btn--primary">Подать заявку</a>
       <button class="burger" id="burger" aria-label="Меню">
         <span></span>
@@ -644,7 +1056,7 @@ body {
         <h4 class="footer__title">Поддержка</h4>
         <ul class="footer__links">
           <li><a href="/#faq">FAQ</a></li>
-          <li><a href="#">Чат 24/7</a></li>
+          <li><a href="/chat.html">Чат 24/7</a></li>
           <li><a href="/blog.html">Инструкции</a></li>
           <li><a href="#">Контакты</a></li>
         </ul>
@@ -661,6 +1073,81 @@ body {
     </div>
   </div>
 </footer>
+
+<!-- ============ MODAL ВХОДА ============ -->
+<div class="modal login-modal" id="loginModal" aria-hidden="true">
+  <div class="modal__overlay" data-login-close></div>
+  <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+
+    <button type="button" class="modal__close" data-login-close aria-label="Закрыть">✕</button>
+
+    <div class="modal__head">
+      <div class="modal__icon">🔐</div>
+      <div>
+        <h3 class="modal__title" id="loginTitle">Вход в личный кабинет</h3>
+        <p class="modal__subtitle">Введите логин и пароль, выданные при подключении.</p>
+      </div>
+    </div>
+
+    <form id="loginForm" novalidate>
+      <div class="login-error" id="loginError">Неверный логин или пароль</div>
+
+      <div class="form__group">
+        <label class="form__label" for="loginUsername">Логин</label>
+        <input
+          class="form__input"
+          type="text"
+          id="loginUsername"
+          name="username"
+          placeholder="Ваш логин"
+          autocomplete="username"
+          required>
+      </div>
+
+      <div class="form__group">
+        <label class="form__label" for="loginPassword">Пароль</label>
+        <input
+          class="form__input"
+          type="password"
+          id="loginPassword"
+          name="password"
+          placeholder="Ваш пароль"
+          autocomplete="current-password"
+          required>
+      </div>
+
+      <button type="submit" class="btn btn--primary btn--lg form__submit" id="loginSubmitBtn">
+        Войти
+      </button>
+
+      <p class="login-note">
+        Забыли пароль? Напишите в
+        <a href="/chat.html" target="_blank" rel="noopener">чат поддержки</a>
+        — поможем восстановить доступ.
+      </p>
+    </form>
+
+  </div>
+</div>
+
+<!-- ============ FLOATING CHAT BUTTON ============ -->
+<a href="/chat.html" target="_blank" rel="noopener" class="chat-fab" id="chatFab" aria-label="Открыть чат поддержки">
+  <span class="chat-fab__icon">💬</span>
+  <span class="chat-fab__badge" id="chatFabBadge">0</span>
+</a>
+
+<!-- ============ NOTIFICATION TOAST ============ -->
+<div class="chat-notify" id="chatNotify" role="alert" aria-live="polite">
+  <button class="chat-notify__close" id="chatNotifyClose" aria-label="Закрыть">✕</button>
+  <div class="chat-notify__icon">
+    💬
+    <span class="chat-notify__count" id="chatNotifyCount">1</span>
+  </div>
+  <div class="chat-notify__body">
+    <div class="chat-notify__title">Ответ поддержки</div>
+    <div class="chat-notify__text" id="chatNotifyText">У вас новое сообщение в чате.</div>
+  </div>
+</div>
 
 <script>
 // ============ HEADER SCROLL ============
@@ -705,6 +1192,179 @@ const revealObserver = new IntersectionObserver((entries) => {
 });
 
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ============================================================
+// MODAL ВХОДА
+// Бэкенда нет — на любую пару логин/пароль показываем ошибку
+// ============================================================
+const loginModal = document.getElementById('loginModal');
+const loginForm = document.getElementById('loginForm');
+const loginError = document.getElementById('loginError');
+const loginSubmitBtn = document.getElementById('loginSubmitBtn');
+
+function openLoginModal() {
+  loginModal.classList.add('active');
+  loginModal.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('modal-open');
+  loginError.classList.remove('show');
+  loginForm.reset();
+  const user = document.getElementById('loginUsername');
+  const pass = document.getElementById('loginPassword');
+  user.style.borderColor = '';
+  pass.style.borderColor = '';
+  setTimeout(() => user.focus(), 300);
+}
+
+function closeLoginModal() {
+  loginModal.classList.remove('active');
+  loginModal.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('modal-open');
+}
+
+document.querySelectorAll('[data-login-open]').forEach(btn => {
+  btn.addEventListener('click', openLoginModal);
+});
+
+document.querySelectorAll('[data-login-close]').forEach(el => {
+  el.addEventListener('click', closeLoginModal);
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && loginModal.classList.contains('active')) {
+    closeLoginModal();
+  }
+});
+
+loginForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const user = document.getElementById('loginUsername');
+  const pass = document.getElementById('loginPassword');
+
+  user.style.borderColor = '';
+  pass.style.borderColor = '';
+  loginError.classList.remove('show');
+
+  if (!user.value.trim() || !pass.value.trim()) {
+    if (!user.value.trim()) user.style.borderColor = '#ff5f57';
+    if (!pass.value.trim()) pass.style.borderColor = '#ff5f57';
+    return;
+  }
+
+  const originalText = loginSubmitBtn.innerHTML;
+  loginSubmitBtn.disabled = true;
+  loginSubmitBtn.innerHTML = 'Проверяем...';
+
+  setTimeout(() => {
+    loginSubmitBtn.disabled = false;
+    loginSubmitBtn.innerHTML = originalText;
+
+    loginError.classList.remove('show');
+    void loginError.offsetWidth;
+    loginError.classList.add('show');
+
+    pass.value = '';
+    pass.focus();
+  }, 700);
+});
+
+// ============================================================
+// CHAT: плавающая кнопка + система уведомлений
+// Синхронизируется с chat.html через localStorage
+// ============================================================
+(function() {
+  const CHAT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzp_AuStIiDbYe7db98WjM-BqMZdgxrQdVkH6LgpX6x3Wb2JfXAqQafcmEBjlosZRY/exec';
+  const LAST_READ_KEY = 'techtv_last_read_ts';
+  const POLL_INTERVAL = 8000;
+
+  let userID = localStorage.getItem('chat_user_id');
+  if (!userID) {
+    userID = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
+    localStorage.setItem('chat_user_id', userID);
+  }
+
+  const fab = document.getElementById('chatFab');
+  const fabBadge = document.getElementById('chatFabBadge');
+  const notify = document.getElementById('chatNotify');
+  const notifyCount = document.getElementById('chatNotifyCount');
+  const notifyText = document.getElementById('chatNotifyText');
+  const notifyClose = document.getElementById('chatNotifyClose');
+
+  if (!fab || !notify) return;
+
+  function getLastReadTs() {
+    return localStorage.getItem(LAST_READ_KEY) || '1970-01-01T00:00:00.000Z';
+  }
+
+  function countUnread(messages) {
+    if (!Array.isArray(messages)) return 0;
+    const lastRead = new Date(getLastReadTs()).getTime();
+    return messages.filter(m => {
+      if (m.userID !== 'manager') return false;
+      const t = new Date(m.timestamp).getTime();
+      return t > lastRead;
+    }).length;
+  }
+
+  function updateUI(unreadCount, lastMessage) {
+    if (unreadCount > 0) {
+      const display = unreadCount > 99 ? '99+' : String(unreadCount);
+      fabBadge.textContent = display;
+      fabBadge.classList.add('show');
+
+      notifyCount.textContent = display;
+      notifyText.textContent = lastMessage && lastMessage.message
+        ? lastMessage.message.slice(0, 120)
+        : 'У вас новое сообщение в чате поддержки.';
+      notify.classList.add('show');
+    } else {
+      fabBadge.classList.remove('show');
+      notify.classList.remove('show');
+    }
+  }
+
+  async function pollMessages() {
+    try {
+      const url = CHAT_ENDPOINT + '?userID=' + encodeURIComponent(userID);
+      const r = await fetch(url, { cache: 'no-cache' });
+      if (!r.ok) return;
+      const data = await r.json();
+      if (!data || data.error) return;
+
+      const messages = data.messages || [];
+      const unreadCount = countUnread(messages);
+
+      const managerMsgs = messages.filter(m => m.userID === 'manager');
+      const lastMessage = managerMsgs.length ? managerMsgs[managerMsgs.length - 1] : null;
+
+      updateUI(unreadCount, lastMessage);
+    } catch (e) {
+      // тихо игнорируем
+    }
+  }
+
+  notifyClose.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    notify.classList.remove('show');
+  });
+
+  notify.addEventListener('click', function(e) {
+    if (e.target.closest('.chat-notify__close')) return;
+    window.open('/chat.html', '_blank', 'noopener');
+  });
+
+  window.addEventListener('storage', function(e) {
+    if (e.key === LAST_READ_KEY) {
+      pollMessages();
+    }
+  });
+
+  window.addEventListener('focus', pollMessages);
+
+  pollMessages();
+  setInterval(pollMessages, POLL_INTERVAL);
+})();
 </script>
 
 </body>
