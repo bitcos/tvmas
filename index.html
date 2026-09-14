@@ -1,1 +1,1806 @@
-coming soon...
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StreamX — IP-телевидение нового поколения</title>
+<meta name="description" content="Более 15 000 каналов и фильмов в 4K HDR. Смотрите на любом устройстве без задержек и рекламы. Бесплатный пробный период.">
+<style>
+/* ============ RESET & BASE ============ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #12121a;
+  --bg-card: #1a1a24;
+  --bg-card-hover: #22222e;
+  --border: #2a2a3a;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0b0;
+  --text-muted: #6a6a7a;
+  --accent: #00d4ff;
+  --accent-hover: #33ddff;
+  --accent-glow: rgba(0, 212, 255, 0.4);
+  --gradient: linear-gradient(135deg, #00d4ff 0%, #7b61ff 100%);
+  --gradient-2: linear-gradient(135deg, #7b61ff 0%, #ff3d9a 100%);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Roboto, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+section {
+  padding: 100px 0;
+  position: relative;
+}
+
+/* ============ TYPOGRAPHY ============ */
+h1, h2, h3, h4 {
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.section-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  text-align: center;
+  margin-bottom: 16px;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-subtitle {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 1.125rem;
+  max-width: 640px;
+  margin: 0 auto 64px;
+}
+
+/* ============ BUTTONS ============ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.btn--primary {
+  background: var(--gradient);
+  color: #0a0a0f;
+  box-shadow: 0 4px 24px var(--accent-glow);
+}
+
+.btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px var(--accent-glow);
+}
+
+.btn--secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+
+.btn--secondary:hover {
+  background: var(--bg-card);
+  border-color: var(--accent);
+}
+
+.btn--lg {
+  padding: 18px 40px;
+  font-size: 1.0625rem;
+}
+
+/* ============ HEADER ============ */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 16px 0;
+  transition: var(--transition);
+  backdrop-filter: blur(0px);
+}
+
+.header.scrolled {
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 0;
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.logo__icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+.nav {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.nav__link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  transition: var(--transition);
+  position: relative;
+}
+
+.nav__link:hover {
+  color: var(--text-primary);
+}
+
+.nav__link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background: var(--gradient);
+  transition: width 0.3s ease;
+}
+
+.nav__link:hover::after {
+  width: 100%;
+}
+
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.burger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--text-primary);
+  border-radius: 2px;
+  transition: var(--transition);
+}
+
+.burger.active span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.burger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.burger.active span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ============ HERO ============ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 140px 0 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.15), transparent 70%);
+  border-radius: 50%;
+  animation: float 8s ease-in-out infinite;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -20%;
+  left: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(123, 97, 255, 0.15), transparent 70%);
+  border-radius: 50%;
+  animation: float 10s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(30px, -30px); }
+}
+
+.hero__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 100px;
+  font-size: 0.875rem;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 24px;
+  animation: fadeInUp 0.6s ease both;
+}
+
+.hero__badge .dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 12px var(--accent);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.hero__title {
+  font-size: clamp(2.25rem, 5vw, 4rem);
+  margin-bottom: 24px;
+  animation: fadeInUp 0.6s ease 0.1s both;
+}
+
+.hero__title-accent {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero__text {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+  max-width: 520px;
+  animation: fadeInUp 0.6s ease 0.2s both;
+}
+
+.hero__actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+  animation: fadeInUp 0.6s ease 0.3s both;
+}
+
+.hero__stats {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  animation: fadeInUp 0.6s ease 0.4s both;
+}
+
+.hero__stat-value {
+  font-size: 1.875rem;
+  font-weight: 800;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero__stat-label {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+/* Hero visual */
+.hero__visual {
+  position: relative;
+  animation: fadeInUp 0.8s ease 0.3s both;
+}
+
+.tv-mockup {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+}
+
+.tv-mockup__screen {
+  aspect-ratio: 16 / 10;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16162a 50%, #0f0f1a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.tv-mockup__screen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(0, 212, 255, 0.2), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(123, 97, 255, 0.2), transparent 40%);
+}
+
+.tv-mockup__play {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  animation: pulsePlay 3s ease-in-out infinite;
+}
+
+.tv-mockup__play::after {
+  content: '';
+  border-style: solid;
+  border-width: 14px 0 14px 22px;
+  border-color: transparent transparent transparent #ffffff;
+  margin-left: 6px;
+}
+
+@keyframes pulsePlay {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.5); }
+  50% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(0, 212, 255, 0); }
+}
+
+.tv-mockup__bar {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+}
+
+.tv-mockup__bar span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border);
+}
+
+.tv-mockup__bar span:first-child { background: #ff5f57; }
+.tv-mockup__bar span:nth-child(2) { background: #febc2e; }
+.tv-mockup__bar span:nth-child(3) { background: #28c840; }
+
+.floating-card {
+  position: absolute;
+  background: rgba(26, 26, 36, 0.9);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: floatCard 4s ease-in-out infinite;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+.floating-card--1 {
+  top: 10%;
+  right: -20px;
+  animation-delay: 0s;
+}
+
+.floating-card--2 {
+  bottom: 10%;
+  left: -20px;
+  animation-delay: 2s;
+}
+
+@keyframes floatCard {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+.floating-card__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+.floating-card__title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+
+.floating-card__text {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============ MARQUEE ============ */
+.marquee {
+  padding: 40px 0;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  position: relative;
+}
+
+.marquee__track {
+  display: flex;
+  gap: 80px;
+  animation: scroll 30s linear infinite;
+  white-space: nowrap;
+}
+
+.marquee__item {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  opacity: 0.5;
+  letter-spacing: -0.02em;
+  transition: var(--transition);
+}
+
+.marquee__item:hover {
+  opacity: 1;
+  color: var(--accent);
+}
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ============ FEATURES ============ */
+.features__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.feature {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.feature::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.feature:hover {
+  transform: translateY(-6px);
+  border-color: rgba(0, 212, 255, 0.4);
+  background: var(--bg-card-hover);
+}
+
+.feature:hover::before {
+  transform: scaleX(1);
+}
+
+.feature__icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: rgba(0, 212, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  margin-bottom: 20px;
+  transition: var(--transition);
+}
+
+.feature:hover .feature__icon {
+  background: var(--gradient);
+  transform: scale(1.05);
+}
+
+.feature__title {
+  font-size: 1.25rem;
+  margin-bottom: 12px;
+}
+
+.feature__text {
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+}
+
+/* ============ DEVICES ============ */
+.devices {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.devices__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.device {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 24px 16px;
+  text-align: center;
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.device:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  background: var(--bg-card-hover);
+}
+
+.device__icon {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.device__name {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+/* ============ PRICING ============ */
+.pricing__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+  align-items: stretch;
+}
+
+.pricing-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition);
+  position: relative;
+}
+
+.pricing-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(0, 212, 255, 0.5);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.pricing-card--featured {
+  background: linear-gradient(180deg, rgba(0, 212, 255, 0.08) 0%, var(--bg-card) 100%);
+  border: 2px solid var(--accent);
+  transform: scale(1.03);
+  box-shadow: 0 20px 60px rgba(0, 212, 255, 0.15);
+}
+
+.pricing-card--featured:hover {
+  transform: scale(1.03) translateY(-6px);
+}
+
+.pricing-card__badge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--gradient);
+  color: #0a0a0f;
+  padding: 6px 20px;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.pricing-card__name {
+  font-size: 1.25rem;
+  margin-bottom: 8px;
+}
+
+.pricing-card__desc {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+.pricing-card__price {
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.pricing-card__price span {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.pricing-card__old-price {
+  font-size: 0.9375rem;
+  color: var(--text-muted);
+  text-decoration: line-through;
+  margin-bottom: 24px;
+}
+
+.pricing-card__features {
+  list-style: none;
+  margin: 24px 0 32px;
+  flex: 1;
+}
+
+.pricing-card__features li {
+  padding: 10px 0;
+  padding-left: 28px;
+  position: relative;
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.pricing-card__features li:last-child {
+  border-bottom: none;
+}
+
+.pricing-card__features li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  color: var(--accent);
+  font-weight: 800;
+  font-size: 0.875rem;
+}
+
+.pricing-card .btn {
+  width: 100%;
+}
+
+/* ============ HOW IT WORKS ============ */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 32px;
+  position: relative;
+}
+
+.step {
+  text-align: center;
+  padding: 32px 24px;
+  position: relative;
+}
+
+.step__num {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 2px solid var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--accent);
+  margin: 0 auto 24px;
+  box-shadow: 0 0 30px var(--accent-glow);
+}
+
+.step__title {
+  font-size: 1.25rem;
+  margin-bottom: 12px;
+}
+
+.step__text {
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+}
+
+/* ============ TESTIMONIALS ============ */
+.testimonials {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.testimonials__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.testimonial {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  transition: var(--transition);
+}
+
+.testimonial:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 212, 255, 0.3);
+}
+
+.testimonial__stars {
+  color: #ffb400;
+  font-size: 1rem;
+  margin-bottom: 16px;
+  letter-spacing: 2px;
+}
+
+.testimonial__text {
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+  margin-bottom: 24px;
+  font-style: italic;
+}
+
+.testimonial__author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.testimonial__avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  color: #0a0a0f;
+  font-size: 1rem;
+}
+
+.testimonial__name {
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+
+.testimonial__role {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+/* ============ FAQ ============ */
+.faq {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.faq__item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.faq__item.active {
+  border-color: rgba(0, 212, 255, 0.4);
+}
+
+.faq__question {
+  width: 100%;
+  padding: 22px 28px;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  transition: var(--transition);
+}
+
+.faq__question:hover {
+  color: var(--accent);
+}
+
+.faq__icon {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  color: var(--accent);
+  transition: transform 0.3s ease;
+}
+
+.faq__item.active .faq__icon {
+  transform: rotate(45deg);
+  background: var(--accent);
+  color: var(--bg-primary);
+}
+
+.faq__answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+  padding: 0 28px;
+}
+
+.faq__item.active .faq__answer {
+  max-height: 300px;
+  padding: 0 28px 24px;
+}
+
+.faq__answer p {
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+}
+
+/* ============ CTA ============ */
+.cta {
+  padding: 100px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(0, 212, 255, 0.15), transparent 60%);
+  pointer-events: none;
+}
+
+.cta__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  margin: 0 auto;
+  background: linear-gradient(180deg, rgba(0, 212, 255, 0.1) 0%, rgba(123, 97, 255, 0.1) 100%);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 24px;
+  padding: 64px 40px;
+}
+
+.cta__title {
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  margin-bottom: 16px;
+}
+
+.cta__text {
+  color: var(--text-secondary);
+  font-size: 1.125rem;
+  margin-bottom: 32px;
+}
+
+.cta__actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cta__note {
+  margin-top: 20px;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+/* ============ FOOTER ============ */
+.footer {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  padding: 64px 0 32px;
+}
+
+.footer__grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 48px;
+}
+
+.footer__brand {
+  max-width: 320px;
+}
+
+.footer__text {
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+  margin: 16px 0 24px;
+}
+
+.footer__socials {
+  display: flex;
+  gap: 12px;
+}
+
+.footer__social {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: var(--transition);
+  font-size: 1rem;
+}
+
+.footer__social:hover {
+  background: var(--gradient);
+  color: var(--bg-primary);
+  border-color: transparent;
+  transform: translateY(-3px);
+}
+
+.footer__title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
+
+.footer__links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer__links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.9375rem;
+  transition: var(--transition);
+}
+
+.footer__links a:hover {
+  color: var(--accent);
+}
+
+.footer__bottom {
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 968px) {
+  section {
+    padding: 72px 0;
+  }
+
+  .hero {
+    padding: 120px 0 60px;
+  }
+
+  .hero__inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .hero__text {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero__actions,
+  .hero__stats {
+    justify-content: center;
+  }
+
+  .hero__visual {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .floating-card--1 { right: 0; }
+  .floating-card--2 { left: 0; }
+
+  .footer__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  .footer__brand {
+    grid-column: 1 / -1;
+    max-width: 100%;
+  }
+
+  .pricing-card--featured {
+    transform: none;
+  }
+
+  .pricing-card--featured:hover {
+    transform: translateY(-6px);
+  }
+}
+
+@media (max-width: 768px) {
+  .nav {
+    position: fixed;
+    top: 68px;
+    left: 0;
+    right: 0;
+    background: rgba(10, 10, 15, 0.98);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    padding: 32px 24px;
+    gap: 24px;
+    border-bottom: 1px solid var(--border);
+    transform: translateY(-120%);
+    transition: transform 0.3s ease;
+  }
+
+  .nav.active {
+    transform: translateY(0);
+  }
+
+  .nav__link {
+    font-size: 1.125rem;
+  }
+
+  .burger {
+    display: flex;
+  }
+
+  .header__actions .btn--secondary {
+    display: none;
+  }
+
+  .hero__stats {
+    gap: 24px;
+  }
+
+  .hero__stat-value {
+    font-size: 1.5rem;
+  }
+
+  .floating-card {
+    padding: 10px 14px;
+  }
+
+  .floating-card__title {
+    font-size: 0.8125rem;
+  }
+
+  .cta__inner {
+    padding: 48px 24px;
+  }
+
+  .btn--lg {
+    padding: 16px 28px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 16px;
+  }
+
+  .hero__actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero__actions .btn {
+    width: 100%;
+  }
+
+  .floating-card {
+    display: none;
+  }
+
+  .footer__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer__bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/* ============ SCROLL REVEAL ============ */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="#" class="logo">
+      <div class="logo__icon">▶</div>
+      StreamX
+    </a>
+
+    <nav class="nav" id="nav">
+      <a href="#features" class="nav__link">Возможности</a>
+      <a href="#devices" class="nav__link">Устройства</a>
+      <a href="#pricing" class="nav__link">Тарифы</a>
+      <a href="#how" class="nav__link">Как это работает</a>
+      <a href="#faq" class="nav__link">FAQ</a>
+    </nav>
+
+    <div class="header__actions">
+      <a href="#" class="btn btn--secondary">Войти</a>
+      <a href="#pricing" class="btn btn--primary">Попробовать бесплатно</a>
+      <button class="burger" id="burger" aria-label="Меню">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="container hero__inner">
+    <div class="hero__content">
+      <div class="hero__badge">
+        <span class="dot"></span>
+        7 дней бесплатно · Без карты
+      </div>
+
+      <h1 class="hero__title">
+        IP-телевидение<br>
+        <span class="hero__title-accent">нового поколения</span>
+      </h1>
+
+      <p class="hero__text">
+        Более 15 000 каналов, фильмов и сериалов в 4K HDR.
+        Смотрите на любом устройстве без задержек, рекламы и лишних сложностей.
+      </p>
+
+      <div class="hero__actions">
+        <a href="#pricing" class="btn btn--primary btn--lg">
+          Начать бесплатно →
+        </a>
+        <a href="#features" class="btn btn--secondary btn--lg">
+          Узнать больше
+        </a>
+      </div>
+
+      <div class="hero__stats">
+        <div>
+          <div class="hero__stat-value">15 000+</div>
+          <div class="hero__stat-label">каналов и фильмов</div>
+        </div>
+        <div>
+          <div class="hero__stat-value">4K HDR</div>
+          <div class="hero__stat-label">качество картинки</div>
+        </div>
+        <div>
+          <div class="hero__stat-value">99.9%</div>
+          <div class="hero__stat-label">аптайм сервиса</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero__visual">
+      <div class="tv-mockup">
+        <div class="tv-mockup__bar">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="tv-mockup__screen">
+          <div class="tv-mockup__play"></div>
+        </div>
+      </div>
+
+      <div class="floating-card floating-card--1">
+        <div class="floating-card__icon">🎬</div>
+        <div>
+          <div class="floating-card__title">4K Ultra HD</div>
+          <div class="floating-card__text">Кристальная картинка</div>
+        </div>
+      </div>
+
+      <div class="floating-card floating-card--2">
+        <div class="floating-card__icon">⚡</div>
+        <div>
+          <div class="floating-card__title">Без задержек</div>
+          <div class="floating-card__text">Загрузка за 0.3 сек</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MARQUEE ============ -->
+<div class="marquee">
+  <div class="marquee__track" id="marqueeTrack">
+    <span class="marquee__item">NETFLIX</span>
+    <span class="marquee__item">HBO</span>
+    <span class="marquee__item">DISNEY+</span>
+    <span class="marquee__item">AMAZON PRIME</span>
+    <span class="marquee__item">APPLE TV+</span>
+    <span class="marquee__item">SPOTIFY</span>
+    <span class="marquee__item">YOUTUBE TV</span>
+    <span class="marquee__item">PARAMOUNT+</span>
+  </div>
+</div>
+
+<!-- ============ FEATURES ============ -->
+<section id="features">
+  <div class="container">
+    <h2 class="section-title reveal">Почему выбирают StreamX</h2>
+    <p class="section-subtitle reveal">Всё, что нужно для идеального просмотра — в одном сервисе</p>
+
+    <div class="features__grid">
+      <div class="feature reveal">
+        <div class="feature__icon">🎥</div>
+        <h3 class="feature__title">Огромная библиотека</h3>
+        <p class="feature__text">Более 15 000 каналов и фильмов: спорт, кино, детские, новостные и документальные — на любой вкус.</p>
+      </div>
+
+      <div class="feature reveal">
+        <div class="feature__icon">✨</div>
+        <h3 class="feature__title">Качество 4K HDR</h3>
+        <p class="feature__text">Кристально чистая картинка с поддержкой Dolby Vision и Dolby Atmos. Наслаждайтесь каждой деталью.</p>
+      </div>
+
+      <div class="feature reveal">
+        <div class="feature__icon">📱</div>
+        <h3 class="feature__title">Мультискрин</h3>
+        <p class="feature__text">Смотрите на нескольких устройствах одновременно. Каждый член семьи — свой контент на своём экране.</p>
+      </div>
+
+      <div class="feature reveal">
+        <div class="feature__icon">⏪</div>
+        <h3 class="feature__title">Архив передач</h3>
+        <p class="feature__text">Пропустили любимую программу? Смотрите архив за 7 дней и ставьте эфир на паузу в любой момент.</p>
+      </div>
+
+      <div class="feature reveal">
+        <div class="feature__icon">👨‍👩‍👧</div>
+        <h3 class="feature__title">Родительский контроль</h3>
+        <p class="feature__text">Настраивайте возрастные ограничения и PIN-коды. Защитите детей от нежелательного контента.</p>
+      </div>
+
+      <div class="feature reveal">
+        <div class="feature__icon">🛡️</div>
+        <h3 class="feature__title">Стабильность 99.9%</h3>
+        <p class="feature__text">Собственные серверы по всему миру обеспечивают стабильный стрим без буферизации в любое время.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DEVICES ============ -->
+<section class="devices" id="devices">
+  <div class="container">
+    <h2 class="section-title reveal">Смотрите на любом устройстве</h2>
+    <p class="section-subtitle reveal">Один аккаунт — все ваши гаджеты</p>
+
+    <div class="devices__grid">
+      <div class="device reveal"><span class="device__icon">📺</span><div class="device__name">Smart TV</div></div>
+      <div class="device reveal"><span class="device__icon">📱</span><div class="device__name">iOS / Android</div></div>
+      <div class="device reveal"><span class="device__icon">💻</span><div class="device__name">Windows / Mac</div></div>
+      <div class="device reveal"><span class="device__icon">🍎</span><div class="device__name">Apple TV</div></div>
+      <div class="device reveal"><span class="device__icon">🤖</span><div class="device__name">Android TV</div></div>
+      <div class="device reveal"><span class="device__icon">🔥</span><div class="device__name">Fire Stick</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section id="pricing">
+  <div class="container">
+    <h2 class="section-title reveal">Выберите свой тариф</h2>
+    <p class="section-subtitle reveal">Прозрачные цены. Отмена в любой момент. 7 дней бесплатно</p>
+
+    <div class="pricing__grid">
+      <!-- Старт -->
+      <div class="pricing-card reveal">
+        <h3 class="pricing-card__name">Старт</h3>
+        <p class="pricing-card__desc">Для одного устройства</p>
+        <div class="pricing-card__price">9.99$<span>/мес</span></div>
+        <div class="pricing-card__old-price">14.99$</div>
+        <ul class="pricing-card__features">
+          <li>Более 5 000 каналов</li>
+          <li>Качество HD / Full HD</li>
+          <li>1 устройство одновременно</li>
+          <li>Архив передач 3 дня</li>
+          <li>Поддержка 24/7</li>
+        </ul>
+        <a href="#" class="btn btn--secondary">Выбрать тариф</a>
+      </div>
+
+      <!-- Премиум -->
+      <div class="pricing-card pricing-card--featured reveal">
+        <div class="pricing-card__badge">Популярный</div>
+        <h3 class="pricing-card__name">Премиум</h3>
+        <p class="pricing-card__desc">Оптимально для семьи</p>
+        <div class="pricing-card__price">15.99$<span>/мес</span></div>
+        <div class="pricing-card__old-price">24.99$</div>
+        <ul class="pricing-card__features">
+          <li>Более 15 000 каналов и фильмов</li>
+          <li>Качество 4K HDR + Dolby</li>
+          <li>3 устройства одновременно</li>
+          <li>Архив передач 7 дней</li>
+          <li>Без рекламы</li>
+          <li>Родительский контроль</li>
+        </ul>
+        <a href="#" class="btn btn--primary">Начать бесплатно</a>
+      </div>
+
+      <!-- Семейный -->
+      <div class="pricing-card reveal">
+        <h3 class="pricing-card__name">Семейный</h3>
+        <p class="pricing-card__desc">Максимум возможностей</p>
+        <div class="pricing-card__price">19.99$<span>/мес</span></div>
+        <div class="pricing-card__old-price">29.99$</div>
+        <ul class="pricing-card__features">
+          <li>Всё из тарифа «Премиум»</li>
+          <li>5 устройств одновременно</li>
+          <li>Детский режим</li>
+          <li>Расширенный архив 14 дней</li>
+          <li>Персональный менеджер</li>
+        </ul>
+        <a href="#" class="btn btn--secondary">Выбрать тариф</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section id="how" style="background: var(--bg-secondary); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <h2 class="section-title reveal">Как это работает</h2>
+    <p class="section-subtitle reveal">Три простых шага до любимого контента</p>
+
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step__num">1</div>
+        <h3 class="step__title">Выбираете тариф</h3>
+        <p class="step__text">Ознакомьтесь с планами и выберите подходящий. Начните с 7-дневного бесплатного периода.</p>
+      </div>
+
+      <div class="step reveal">
+        <div class="step__num">2</div>
+        <h3 class="step__title">Регистрируетесь</h3>
+        <p class="step__text">Создайте аккаунт за 30 секунд. Никаких карт и сложных форм — только email и пароль.</p>
+      </div>
+
+      <div class="step reveal">
+        <div class="step__num">3</div>
+        <h3 class="step__title">Смотрите</h3>
+        <p class="step__text">Устанавливайте приложение на любое устройство и наслаждайтесь. Настройка занимает меньше минуты.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="testimonials">
+  <div class="container">
+    <h2 class="section-title reveal">Что говорят пользователи</h2>
+    <p class="section-subtitle reveal">Более 120 000 довольных клиентов по всему миру</p>
+
+    <div class="testimonials__grid">
+      <div class="testimonial reveal">
+        <div class="testimonial__stars">★★★★★</div>
+        <p class="testimonial__text">«Перешёл со спутникового ТВ и не жалею. Качество картинки в 4K просто потрясающее, а цена в разы ниже. Рекомендую!»</p>
+        <div class="testimonial__author">
+          <div class="testimonial__avatar">А</div>
+          <div>
+            <div class="testimonial__name">Алексей М.</div>
+            <div class="testimonial__role">Пользователь 2 года</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial reveal">
+        <div class="testimonial__stars">★★★★★</div>
+        <p class="testimonial__text">«Дети смотрят мультики, муж — футбол, я — сериалы. Всё одновременно на разных устройствах. Идеально для семьи!»</p>
+        <div class="testimonial__author">
+          <div class="testimonial__avatar">М</div>
+          <div>
+            <div class="testimonial__name">Мария К.</div>
+            <div class="testimonial__role">Пользователь 1 год</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial reveal">
+        <div class="testimonial__stars">★★★★★</div>
+        <p class="testimonial__text">«Поддержка отвечает мгновенно, сервис ни разу не подводил. За год использования — ни одного сбоя. Так держать!»</p>
+        <div class="testimonial__author">
+          <div class="testimonial__avatar">Д</div>
+          <div>
+            <div class="testimonial__name">Дмитрий В.</div>
+            <div class="testimonial__role">Пользователь 3 года</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq">
+  <div class="container">
+    <h2 class="section-title reveal">Частые вопросы</h2>
+    <p class="section-subtitle reveal">Не нашли ответ? Напишите нам в чат — ответим за пару минут</p>
+
+    <div class="faq">
+      <div class="faq__item reveal">
+        <button class="faq__question">
+          Какая скорость интернета нужна?
+          <span class="faq__icon">+</span>
+        </button>
+        <div class="faq__answer">
+          <p>Для HD-качества достаточно 5 Мбит/с, для 4K HDR — от 25 Мбит/с. Сервис автоматически подстраивает качество под вашу скорость, чтобы избежать буферизации.</p>
+        </div>
+      </div>
+
+      <div class="faq__item reveal">
+        <button class="faq__question">
+          Можно ли смотреть на нескольких устройствах?
+          <span class="faq__icon">+</span>
+        </button>
+        <div class="faq__answer">
+          <p>Да. В зависимости от тарифа вы можете одновременно смотреть на 1, 3 или 5 устройствах. Один аккаунт — все ваши гаджеты.</p>
+        </div>
+      </div>
+
+      <div class="faq__item reveal">
+        <button class="faq__question">
+          Что входит в бесплатный пробный период?
+          <span class="faq__icon">+</span>
+        </button>
+        <div class="faq__answer">
+          <p>Полный доступ ко всем каналам и функциям тарифа «Премиум» на 7 дней. Карта не требуется — просто зарегистрируйтесь и смотрите.</p>
+        </div>
+      </div>
+
+      <div class="faq__item reveal">
+        <button class="faq__question">
+          Как отменить подписку?
+          <span class="faq__icon">+</span>
+        </button>
+        <div class="faq__answer">
+          <p>В любой момент в личном кабинете в один клик. Никаких скрытых платежей, штрафов и звонков в поддержку — всё прозрачно.</p>
+        </div>
+      </div>
+
+      <div class="faq__item reveal">
+        <button class="faq__question">
+          Есть ли архив передач?
+          <span class="faq__icon">+</span>
+        </button>
+        <div class="faq__answer">
+          <p>Да. В зависимости от тарифа доступен архив от 3 до 14 дней. Вы можете ставить эфир на паузу и перематывать вперёд.</p>
+        </div>
+      </div>
+
+      <div class="faq__item reveal">
+        <button class="faq__question">
+          Как оплатить подписку?
+          <span class="faq__icon">+</span>
+        </button>
+        <div class="faq__answer">
+          <p>Принимаем банковские карты Visa, Mastercard, МИР, а также криптовалюту. Оплата проходит через защищённый шлюз с шифрованием.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta">
+  <div class="container">
+    <div class="cta__inner reveal">
+      <h2 class="cta__title">Начните смотреть прямо сейчас</h2>
+      <p class="cta__text">7 дней бесплатного доступа ко всем каналам и фильмам в 4K. Без карты и обязательств.</p>
+      <div class="cta__actions">
+        <a href="#" class="btn btn--primary btn--lg">Попробовать бесплатно</a>
+        <a href="#pricing" class="btn btn--secondary btn--lg">Смотреть тарифы</a>
+      </div>
+      <p class="cta__note">✓ Без карты · ✓ Отмена в любой момент · ✓ 120 000+ пользователей</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="#" class="logo">
+          <div class="logo__icon">▶</div>
+          StreamX
+        </a>
+        <p class="footer__text">
+          IP-телевидение нового поколения. Более 15 000 каналов и фильмов в 4K HDR на любом устройстве.
+        </p>
+        <div class="footer__socials">
+          <a href="#" class="footer__social" aria-label="Telegram">✈</a>
+          <a href="#" class="footer__social" aria-label="YouTube">▶</a>
+          <a href="#" class="footer__social" aria-label="Instagram">◉</a>
+          <a href="#" class="footer__social" aria-label="VK">VK</a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="footer__title">Продукт</h4>
+        <ul class="footer__links">
+          <li><a href="#features">Возможности</a></li>
+          <li><a href="#pricing">Тарифы</a></li>
+          <li><a href="#devices">Устройства</a></li>
+          <li><a href="#">Приложения</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer__title">Компания</h4>
+        <ul class="footer__links">
+          <li><a href="#">О нас</a></li>
+          <li><a href="#">Блог</a></li>
+          <li><a href="#">Партнёрам</a></li>
+          <li><a href="#">Вакансии</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer__title">Поддержка</h4>
+        <ul class="footer__links">
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#">Чат 24/7</a></li>
+          <li><a href="#">Инструкции</a></li>
+          <li><a href="#">Контакты</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <div>© 2026 StreamX. Все права защищены.</div>
+      <div>
+        <a href="#" style="color: inherit; text-decoration: none;">Политика конфиденциальности</a>
+        &nbsp;·&nbsp;
+        <a href="#" style="color: inherit; text-decoration: none;">Условия использования</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ============ HEADER SCROLL ============
+const header = document.getElementById('header');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 30) {
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
+  }
+});
+
+// ============ MOBILE MENU ============
+const burger = document.getElementById('burger');
+const nav = document.getElementById('nav');
+
+burger.addEventListener('click', () => {
+  burger.classList.toggle('active');
+  nav.classList.toggle('active');
+});
+
+nav.querySelectorAll('.nav__link').forEach(link => {
+  link.addEventListener('click', () => {
+    burger.classList.remove('active');
+    nav.classList.remove('active');
+  });
+});
+
+// ============ FAQ ACCORDION ============
+document.querySelectorAll('.faq__question').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const isActive = item.classList.contains('active');
+
+    document.querySelectorAll('.faq__item').forEach(i => i.classList.remove('active'));
+
+    if (!isActive) {
+      item.classList.add('active');
+    }
+  });
+});
+
+// ============ SCROLL REVEAL ============
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, index) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => {
+        entry.target.classList.add('visible');
+      }, index * 80);
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+});
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ============ MARQUEE DUPLICATE (для бесшовного скролла) ============
+const marqueeTrack = document.getElementById('marqueeTrack');
+marqueeTrack.innerHTML += marqueeTrack.innerHTML;
+
+// ============ SMOOTH SCROLL ============
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const href = this.getAttribute('href');
+    if (href === '#') return;
+    const target = document.querySelector(href);
+    if (target) {
+      e.preventDefault();
+      const offset = 80;
+      const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  });
+});
+</script>
+
+</body>
+</html>
