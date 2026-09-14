@@ -909,7 +909,7 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
 .modal__dialog {
   position: relative;
   width: 100%;
-  max-width: 680px;
+  max-width: 720px;
   background: linear-gradient(180deg, #16161f 0%, var(--bg-card) 100%);
   border: 1px solid var(--border);
   border-radius: 20px;
@@ -999,6 +999,13 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
 }
 
 .form__label .required { color: var(--accent); }
+
+.form__hint {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  font-weight: 400;
+  margin-left: 4px;
+}
 
 .form__input,
 .form__select {
@@ -1753,19 +1760,28 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
           </div>
         </div>
 
-        <div class="form__group">
-          <label class="form__label" for="device">Ваше устройство</label>
-          <select class="form__select" id="device" name="device">
-            <option value="">Выберите устройство</option>
-            <option value="Smart TV Samsung">Smart TV Samsung</option>
-            <option value="Smart TV LG">Smart TV LG</option>
-            <option value="Android TV / приставка">Android TV / приставка</option>
-            <option value="Apple TV">Apple TV</option>
-            <option value="Fire TV Stick">Fire TV Stick</option>
-            <option value="Смартфон / планшет">Смартфон / планшет</option>
-            <option value="Компьютер / ноутбук">Компьютер / ноутбук</option>
-            <option value="Другое">Другое</option>
-          </select>
+        <div class="form__row">
+          <div class="form__group">
+            <label class="form__label" for="device">Устройство</label>
+            <select class="form__select" id="device" name="device">
+              <option value="">Выберите устройство</option>
+              <option value="Smart TV Samsung">Smart TV Samsung</option>
+              <option value="Smart TV LG">Smart TV LG</option>
+              <option value="Android TV / приставка">Android TV / приставка</option>
+              <option value="Apple TV">Apple TV</option>
+              <option value="Fire TV Stick">Fire TV Stick</option>
+              <option value="Смартфон / планшет">Смартфон / планшет</option>
+              <option value="Компьютер / ноутбук">Компьютер / ноутбук</option>
+              <option value="Другое">Другое</option>
+            </select>
+          </div>
+
+          <div class="form__group">
+            <label class="form__label" for="messenger">
+              Мессенджер <span class="form__hint">Telegram, VK, OK, WhatsApp</span>
+            </label>
+            <input class="form__input" type="text" id="messenger" name="messenger" placeholder="@username или ссылка">
+          </div>
         </div>
 
         <button type="submit" class="btn btn--primary btn--lg form__submit">
@@ -1927,6 +1943,7 @@ leadForm.addEventListener('submit', function(e) {
     name: name.value.trim(),
     phone: phone.value.trim(),
     device: document.getElementById('device').value,
+    messenger: document.getElementById('messenger').value.trim(),
     source: 'landing',
     timestamp: new Date().toISOString()
   };
@@ -1945,7 +1962,8 @@ leadForm.addEventListener('submit', function(e) {
   // const text = `Новая заявка StreamX!
   //   Имя: ${formData.name}
   //   Телефон: ${formData.phone}
-  //   Устройство: ${formData.device}`;
+  //   Устройство: ${formData.device}
+  //   Мессенджер: ${formData.messenger}`;
   // fetch(`https://api.telegram.org/bot<TOKEN>/sendMessage?chat_id=<CHAT_ID>&text=${encodeURIComponent(text)}`);
   // ============================================
 
