@@ -913,7 +913,7 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
   background: linear-gradient(180deg, #16161f 0%, var(--bg-card) 100%);
   border: 1px solid var(--border);
   border-radius: 20px;
-  padding: 36px 40px 32px;
+  padding: 32px 40px 28px;
   transform: translateY(20px) scale(0.98);
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
@@ -954,41 +954,41 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
 .modal__head {
   display: flex;
   align-items: center;
-  gap: 16px;
-  margin-bottom: 24px;
+  gap: 14px;
+  margin-bottom: 20px;
 }
 
 .modal__icon {
-  width: 52px; height: 52px;
-  min-width: 52px;
+  width: 48px; height: 48px;
+  min-width: 48px;
   border-radius: 14px;
   background: var(--gradient);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 1.375rem;
   box-shadow: 0 10px 30px var(--accent-glow);
 }
 
 .modal__title {
-  font-size: 1.375rem;
-  margin-bottom: 4px;
+  font-size: 1.25rem;
+  margin-bottom: 2px;
   letter-spacing: -0.02em;
 }
 
 .modal__subtitle {
   color: var(--text-secondary);
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   line-height: 1.4;
 }
 
 .form__row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: 14px;
 }
 
-.form__group { margin-bottom: 16px; }
+.form__group { margin-bottom: 14px; }
 
 .form__label {
   display: block;
@@ -1000,17 +1000,10 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
 
 .form__label .required { color: var(--accent); }
 
-.form__hint {
-  font-size: 0.6875rem;
-  color: var(--text-muted);
-  font-weight: 400;
-  margin-left: 4px;
-}
-
 .form__input,
-.form__select {
+.form__select,
+.form__textarea {
   width: 100%;
-  height: 48px;
   padding: 0 14px;
   background: var(--bg-secondary);
   border: 1px solid var(--border);
@@ -1022,10 +1015,22 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
   outline: none;
 }
 
-.form__input::placeholder { color: var(--text-muted); }
+.form__input,
+.form__select { height: 46px; }
+
+.form__textarea {
+  min-height: 64px;
+  padding: 12px 14px;
+  resize: none;
+  line-height: 1.4;
+}
+
+.form__input::placeholder,
+.form__textarea::placeholder { color: var(--text-muted); }
 
 .form__input:focus,
-.form__select:focus {
+.form__select:focus,
+.form__textarea:focus {
   border-color: var(--accent);
   background: var(--bg-card-hover);
   box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.15);
@@ -1042,14 +1047,40 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
 
 .form__select option { background: var(--bg-card); color: var(--text-primary); }
 
+/* Пояснение под textarea */
+.form__explain {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 8px;
+  padding: 10px 12px;
+  background: rgba(0, 212, 255, 0.06);
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  border-radius: 10px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.form__explain-icon {
+  font-size: 1rem;
+  line-height: 1.2;
+  flex-shrink: 0;
+}
+
+.form__explain strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
 .form__submit {
   width: 100%;
-  margin-top: 4px;
-  height: 52px;
+  margin-top: 8px;
+  height: 50px;
 }
 
 .form__privacy {
-  margin-top: 14px;
+  margin-top: 12px;
   font-size: 0.75rem;
   color: var(--text-muted);
   text-align: center;
@@ -1120,7 +1151,7 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
   .btn--lg { padding: 16px 28px; font-size: 1rem; }
   .pricing-card { padding: 40px 24px; }
   .pricing-card__price { font-size: 3.5rem; }
-  .modal__dialog { padding: 32px 24px 28px; }
+  .modal__dialog { padding: 28px 22px 24px; }
   .form__row { grid-template-columns: 1fr; gap: 0; }
 }
 
@@ -1760,27 +1791,37 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
           </div>
         </div>
 
-        <div class="form__row">
-          <div class="form__group">
-            <label class="form__label" for="device">Устройство</label>
-            <select class="form__select" id="device" name="device">
-              <option value="">Выберите устройство</option>
-              <option value="Smart TV Samsung">Smart TV Samsung</option>
-              <option value="Smart TV LG">Smart TV LG</option>
-              <option value="Android TV / приставка">Android TV / приставка</option>
-              <option value="Apple TV">Apple TV</option>
-              <option value="Fire TV Stick">Fire TV Stick</option>
-              <option value="Смартфон / планшет">Смартфон / планшет</option>
-              <option value="Компьютер / ноутбук">Компьютер / ноутбук</option>
-              <option value="Другое">Другое</option>
-            </select>
-          </div>
+        <div class="form__group">
+          <label class="form__label" for="device">Устройство</label>
+          <select class="form__select" id="device" name="device">
+            <option value="">Выберите устройство</option>
+            <option value="Smart TV Samsung">Smart TV Samsung</option>
+            <option value="Smart TV LG">Smart TV LG</option>
+            <option value="Android TV / приставка">Android TV / приставка</option>
+            <option value="Apple TV">Apple TV</option>
+            <option value="Fire TV Stick">Fire TV Stick</option>
+            <option value="Смартфон / планшет">Смартфон / планшет</option>
+            <option value="Компьютер / ноутбук">Компьютер / ноутбук</option>
+            <option value="Другое">Другое</option>
+          </select>
+        </div>
 
-          <div class="form__group">
-            <label class="form__label" for="messenger">
-              Мессенджер <span class="form__hint">Telegram, VK, OK, WhatsApp</span>
-            </label>
-            <input class="form__input" type="text" id="messenger" name="messenger" placeholder="@username или ссылка">
+        <div class="form__group">
+          <label class="form__label" for="messengers">
+            Мессенджеры и соцсети <span class="required">*</span>
+          </label>
+          <textarea
+            class="form__textarea"
+            id="messengers"
+            name="messengers"
+            placeholder="Telegram: @username · WhatsApp: +375… · VK: vk.com/… · OK: ok.ru/…"
+            required></textarea>
+          <div class="form__explain">
+            <span class="form__explain-icon">💬</span>
+            <span>
+              <strong>Укажите хотя бы один способ онлайн-связи.</strong>
+              По нему техподдержка свяжется с вами, чтобы помочь установить и настроить ПО на ваше устройство — особенно если по телефону дозвониться не получится.
+            </span>
           </div>
         </div>
 
@@ -1926,10 +1967,11 @@ leadForm.addEventListener('submit', function(e) {
 
   const name = document.getElementById('name');
   const phone = document.getElementById('phone');
+  const messengers = document.getElementById('messengers');
 
   let valid = true;
 
-  [name, phone].forEach(field => {
+  [name, phone, messengers].forEach(field => {
     field.style.borderColor = '';
     if (!field.value.trim()) {
       field.style.borderColor = '#ff5f57';
@@ -1937,13 +1979,18 @@ leadForm.addEventListener('submit', function(e) {
     }
   });
 
-  if (!valid) return;
+  if (!valid) {
+    // Плавно скроллим к первому невалидному полю (на случай мобильных)
+    const firstInvalid = [name, phone, messengers].find(f => !f.value.trim());
+    if (firstInvalid) firstInvalid.focus();
+    return;
+  }
 
   const formData = {
     name: name.value.trim(),
     phone: phone.value.trim(),
     device: document.getElementById('device').value,
-    messenger: document.getElementById('messenger').value.trim(),
+    messengers: messengers.value.trim(),
     source: 'landing',
     timestamp: new Date().toISOString()
   };
@@ -1963,7 +2010,7 @@ leadForm.addEventListener('submit', function(e) {
   //   Имя: ${formData.name}
   //   Телефон: ${formData.phone}
   //   Устройство: ${formData.device}
-  //   Мессенджер: ${formData.messenger}`;
+  //   Мессенджеры: ${formData.messengers}`;
   // fetch(`https://api.telegram.org/bot<TOKEN>/sendMessage?chat_id=<CHAT_ID>&text=${encodeURIComponent(text)}`);
   // ============================================
 
