@@ -1093,6 +1093,54 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
 .modal__success-title { font-size: 1.375rem; margin-bottom: 10px; }
 .modal__success-text { color: var(--text-secondary); font-size: 0.9375rem; margin-bottom: 24px; line-height: 1.5; }
 
+/* ============ LOGIN MODAL ============ */
+.login-modal .modal__dialog {
+  max-width: 440px;
+  padding: 32px 36px 28px;
+}
+
+.login-error {
+  display: none;
+  margin-bottom: 16px;
+  padding: 11px 14px;
+  background: rgba(255, 95, 87, 0.1);
+  border: 1px solid rgba(255, 95, 87, 0.35);
+  border-radius: 10px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #ff5f57;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.login-error.show {
+  display: block;
+  animation: shakeError 0.4s ease;
+}
+
+@keyframes shakeError {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+.login-note {
+  margin-top: 16px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.login-note a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.login-note a:hover { text-decoration: underline; }
+
 /* ============ FLOATING CHAT BUTTON ============ */
 .chat-fab {
   position: fixed;
@@ -1323,6 +1371,7 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
   .pricing-card__price { font-size: 3.5rem; }
   .modal__dialog { padding: 28px 22px 24px; }
   .form__row { grid-template-columns: 1fr; gap: 0; }
+  .login-modal .modal__dialog { padding: 28px 22px 24px; }
 }
 
 @media (max-width: 480px) {
@@ -1492,7 +1541,7 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
     </nav>
 
     <div class="header__actions">
-      <a href="#" class="btn btn--secondary">Войти</a>
+      <button type="button" class="btn btn--secondary" data-login-open>Войти</button>
       <button type="button" class="btn btn--primary" data-modal-open>Подать заявку</button>
       <button class="burger" id="burger" aria-label="Меню">
         <span></span>
@@ -2043,6 +2092,62 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
   </div>
 </div>
 
+<!-- ============ MODAL ВХОДА ============ -->
+<div class="modal login-modal" id="loginModal" aria-hidden="true">
+  <div class="modal__overlay" data-login-close></div>
+  <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+
+    <button type="button" class="modal__close" data-login-close aria-label="Закрыть">✕</button>
+
+    <div class="modal__head">
+      <div class="modal__icon">🔐</div>
+      <div>
+        <h3 class="modal__title" id="loginTitle">Вход в личный кабинет</h3>
+        <p class="modal__subtitle">Введите логин и пароль, выданные при подключении.</p>
+      </div>
+    </div>
+
+    <form id="loginForm" novalidate>
+      <div class="login-error" id="loginError">Неверный логин или пароль</div>
+
+      <div class="form__group">
+        <label class="form__label" for="loginUsername">Логин</label>
+        <input
+          class="form__input"
+          type="text"
+          id="loginUsername"
+          name="username"
+          placeholder="Ваш логин"
+          autocomplete="username"
+          required>
+      </div>
+
+      <div class="form__group">
+        <label class="form__label" for="loginPassword">Пароль</label>
+        <input
+          class="form__input"
+          type="password"
+          id="loginPassword"
+          name="password"
+          placeholder="Ваш пароль"
+          autocomplete="current-password"
+          required>
+      </div>
+
+      <button type="submit" class="btn btn--primary btn--lg form__submit" id="loginSubmitBtn">
+        Войти
+      </button>
+
+      <p class="login-note">
+        Забыли пароль? Напишите в
+        <a href="/chat.html" target="_blank" rel="noopener">чат поддержки</a>
+        — поможем восстановить доступ.
+      </p>
+    </form>
+
+  </div>
+</div>
+
 <!-- ============ FLOATING CHAT BUTTON ============ -->
 <a href="/chat.html" target="_blank" rel="noopener" class="chat-fab" id="chatFab" aria-label="Открыть чат поддержки">
   <span class="chat-fab__icon">💬</span>
@@ -2064,7 +2169,7 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
 
 <script>
 // ============ НАСТРОЙКИ ОТПРАВКИ ============
-const LEAD_ENDPOINT = 'https://script.google.com/macros/s/ВСТАВЬ_СЮДА_ID/exec';
+const LEAD_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzp_AuStIiDbYe7db98WjM-BqMZdgxrQdVkH6LgpX6x3Wb2JfXAqQafcmEBjlosZRY/exec';
 
 // ============ HEADER SCROLL ============
 const header = document.getElementById('header');
@@ -2238,6 +2343,84 @@ leadForm.addEventListener('submit', async function(e) {
     submitBtn.disabled = false;
     submitBtn.innerHTML = originalText;
   }
+});
+
+// ============================================================
+// MODAL ВХОДА
+// Бэкенда нет — на любую пару логин/пароль показываем ошибку
+// ============================================================
+const loginModal = document.getElementById('loginModal');
+const loginForm = document.getElementById('loginForm');
+const loginError = document.getElementById('loginError');
+const loginSubmitBtn = document.getElementById('loginSubmitBtn');
+
+function openLoginModal() {
+  loginModal.classList.add('active');
+  loginModal.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('modal-open');
+  loginError.classList.remove('show');
+  loginForm.reset();
+  const user = document.getElementById('loginUsername');
+  const pass = document.getElementById('loginPassword');
+  user.style.borderColor = '';
+  pass.style.borderColor = '';
+  setTimeout(() => user.focus(), 300);
+}
+
+function closeLoginModal() {
+  loginModal.classList.remove('active');
+  loginModal.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('modal-open');
+}
+
+document.querySelectorAll('[data-login-open]').forEach(btn => {
+  btn.addEventListener('click', openLoginModal);
+});
+
+document.querySelectorAll('[data-login-close]').forEach(el => {
+  el.addEventListener('click', closeLoginModal);
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && loginModal.classList.contains('active')) {
+    closeLoginModal();
+  }
+});
+
+loginForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const user = document.getElementById('loginUsername');
+  const pass = document.getElementById('loginPassword');
+
+  user.style.borderColor = '';
+  pass.style.borderColor = '';
+  loginError.classList.remove('show');
+
+  // Проверка на пустые поля
+  if (!user.value.trim() || !pass.value.trim()) {
+    if (!user.value.trim()) user.style.borderColor = '#ff5f57';
+    if (!pass.value.trim()) pass.style.borderColor = '#ff5f57';
+    return;
+  }
+
+  // Имитация запроса на сервер — всегда ошибка, т.к. бэкенда нет
+  const originalText = loginSubmitBtn.innerHTML;
+  loginSubmitBtn.disabled = true;
+  loginSubmitBtn.innerHTML = 'Проверяем...';
+
+  setTimeout(() => {
+    loginSubmitBtn.disabled = false;
+    loginSubmitBtn.innerHTML = originalText;
+
+    // Перезапускаем анимацию появления ошибки
+    loginError.classList.remove('show');
+    void loginError.offsetWidth;
+    loginError.classList.add('show');
+
+    pass.value = '';
+    pass.focus();
+  }, 700);
 });
 
 // ============================================================
