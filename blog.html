@@ -56,7 +56,6 @@ html {
   scrollbar-color: #00d4ff #0a0a0f;
 }
 
-/* ============ CUSTOM SCROLLBAR ============ */
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: var(--bg-primary); }
 ::-webkit-scrollbar-thumb {
@@ -282,6 +281,23 @@ body.modal-open { overflow: hidden; }
     radial-gradient(circle at 80% 70%, rgba(123, 97, 255, 0.15), transparent 40%);
 }
 
+/* Реальная картинка вместо эмодзи */
+.blog-card__image--real::before { display: none; }
+
+.blog-card__image img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  transition: transform 0.5s ease;
+}
+
+.blog-card:hover .blog-card__image img {
+  transform: scale(1.05);
+}
+
 .blog-card__body { padding: 24px; display: flex; flex-direction: column; flex: 1; }
 
 .blog-card__tag {
@@ -308,6 +324,71 @@ body.modal-open { overflow: hidden; }
   align-items: center;
 }
 
+/* ============ LOADING SKELETON ============ */
+.blog-skeleton {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.blog-skeleton__image {
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(90deg, #1a1a24 25%, #22222e 50%, #1a1a24 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.blog-skeleton__body { padding: 24px; }
+
+.blog-skeleton__line {
+  height: 12px;
+  background: linear-gradient(90deg, #1a1a24 25%, #22222e 50%, #1a1a24 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+.blog-skeleton__line--tag { width: 60px; height: 20px; border-radius: 100px; }
+.blog-skeleton__line--title { height: 18px; width: 90%; }
+.blog-skeleton__line--title2 { height: 18px; width: 60%; margin-bottom: 20px; }
+.blog-skeleton__line--excerpt { height: 12px; width: 100%; }
+.blog-skeleton__line--excerpt2 { height: 12px; width: 80%; }
+.blog-skeleton__line--meta { height: 10px; width: 40%; margin-top: 20px; }
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ============ EMPTY / ERROR STATE ============ */
+.blog-state {
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--text-secondary);
+}
+
+.blog-state__icon {
+  font-size: 3rem;
+  opacity: 0.4;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.blog-state__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.blog-state__text {
+  font-size: 0.9375rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
 /* ============ PAGINATION ============ */
 .pagination {
   display: flex;
@@ -331,9 +412,15 @@ body.modal-open { overflow: hidden; }
   font-size: 0.9375rem;
   font-weight: 600;
   transition: var(--transition);
+  cursor: pointer;
+  font-family: inherit;
 }
 
-.pagination__link:hover { border-color: var(--accent); color: var(--text-primary); background: var(--bg-card-hover); }
+.pagination__link:hover {
+  border-color: var(--accent);
+  color: var(--text-primary);
+  background: var(--bg-card-hover);
+}
 
 .pagination__link--active {
   background: var(--gradient);
@@ -342,7 +429,23 @@ body.modal-open { overflow: hidden; }
   box-shadow: 0 4px 20px var(--accent-glow);
 }
 
-.pagination__link--disabled { opacity: 0.4; pointer-events: none; }
+.pagination__link--disabled {
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: default;
+}
+
+.pagination__dots {
+  min-width: 44px;
+  height: 44px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-weight: 600;
+  user-select: none;
+}
 
 /* ============ CTA ============ */
 .cta { padding: 100px 0; text-align: center; position: relative; overflow: hidden; }
@@ -812,6 +915,7 @@ body.modal-open { overflow: hidden; }
   .footer__grid { grid-template-columns: 1fr; }
   .footer__bottom { flex-direction: column; text-align: center; }
   .pagination__link { min-width: 40px; height: 40px; font-size: 0.875rem; }
+  .pagination__dots { min-width: 40px; height: 40px; padding: 0 8px; }
 
   .chat-fab {
     bottom: 16px;
@@ -899,102 +1003,45 @@ body.modal-open { overflow: hidden; }
 <!-- ============ BLOG LIST ============ -->
 <section class="blog-list">
   <div class="container">
-    <div class="blog-list__grid">
-
-      <a href="/blog/kak-vybrat-iptv.html" class="blog-card reveal">
-        <div class="blog-card__image">📊</div>
-        <div class="blog-card__body">
-          <span class="blog-card__tag">Гайд</span>
-          <h2 class="blog-card__title">Как выбрать IPTV-провайдера в 2026 году: 7 главных критериев</h2>
-          <p class="blog-card__excerpt">На что смотреть, чтобы не наткнуться на мошенников и получить стабильный сервис без буферизации.</p>
-          <div class="blog-card__meta">
-            <span>12 сентября 2026</span>
-            <span>·</span>
-            <span>8 мин чтения</span>
-          </div>
+    <div class="blog-list__grid" id="blogGrid">
+      <!-- Скелетоны для загрузки -->
+      <div class="blog-skeleton">
+        <div class="blog-skeleton__image"></div>
+        <div class="blog-skeleton__body">
+          <div class="blog-skeleton__line blog-skeleton__line--tag"></div>
+          <div class="blog-skeleton__line blog-skeleton__line--title"></div>
+          <div class="blog-skeleton__line blog-skeleton__line--title2"></div>
+          <div class="blog-skeleton__line blog-skeleton__line--excerpt"></div>
+          <div class="blog-skeleton__line blog-skeleton__line--excerpt2"></div>
+          <div class="blog-skeleton__line blog-skeleton__line--meta"></div>
         </div>
-      </a>
-
-      <a href="/blog/nastrojka-na-smart-tv.html" class="blog-card reveal">
-        <div class="blog-card__image">📺</div>
-        <div class="blog-card__body">
-          <span class="blog-card__tag">Инструкция</span>
-          <h2 class="blog-card__title">Настройка IPTV на Smart TV Samsung и LG: пошаговая инструкция</h2>
-          <p class="blog-card__excerpt">Подробный гайд с картинками: как установить приложение и настроить плейлист за 10 минут.</p>
-          <div class="blog-card__meta">
-            <span>10 сентября 2026</span>
-            <span>·</span>
-            <span>6 мин чтения</span>
-          </div>
+      </div>
+      <div class="blog-skeleton">
+        <div class="blog-skeleton__image"></div>
+        <div class="blog-skeleton__body">
+          <div class="blog-skeleton__line blog-skeleton__line--tag"></div>
+          <div class="blog-skeleton__line blog-skeleton__line--title"></div>
+          <div class="blog-skeleton__line blog-skeleton__line--title2"></div>
+          <div class="blog-skeleton__line blog-skeleton__line--excerpt"></div>
+          <div class="blog-skeleton__line blog-skeleton__line--excerpt2"></div>
+          <div class="blog-skeleton__line blog-skeleton__line--meta"></div>
         </div>
-      </a>
-
-      <a href="/blog/skorost-interneta.html" class="blog-card reveal">
-        <div class="blog-card__image">⚡</div>
-        <div class="blog-card__body">
-          <span class="blog-card__tag">Технологии</span>
-          <h2 class="blog-card__title">Какая скорость интернета нужна для IPTV в 4K: таблица и советы</h2>
-          <p class="blog-card__excerpt">Разбираем, почему ваш интернет может тормозить и как исправить это за 5 минут.</p>
-          <div class="blog-card__meta">
-            <span>8 сентября 2026</span>
-            <span>·</span>
-            <span>5 мин чтения</span>
-          </div>
+      </div>
+      <div class="blog-skeleton">
+        <div class="blog-skeleton__image"></div>
+        <div class="blog-skeleton__body">
+          <div class="blog-skeleton__line blog-skeleton__line--tag"></div>
+          <div class="blog-skeleton__line blog-skeleton__line--title"></div>
+          <div class="blog-skeleton__line blog-skeleton__line--title2"></div>
+          <div class="blog-skeleton__line blog-skeleton__line--excerpt"></div>
+          <div class="blog-skeleton__line blog-skeleton__line--excerpt2"></div>
+          <div class="blog-skeleton__line blog-skeleton__line--meta"></div>
         </div>
-      </a>
-
-      <a href="/blog/iptv-vs-kabelnoe-tv.html" class="blog-card reveal">
-        <div class="blog-card__image">🔄</div>
-        <div class="blog-card__body">
-          <span class="blog-card__tag">Сравнение</span>
-          <h2 class="blog-card__title">IPTV vs кабельное ТВ: что выбрать в 2026 году</h2>
-          <p class="blog-card__excerpt">Сравниваем цену, качество, удобство и возможности. Разбираем, почему всё больше людей отказываются от кабеля.</p>
-          <div class="blog-card__meta">
-            <span>5 сентября 2026</span>
-            <span>·</span>
-            <span>7 мин чтения</span>
-          </div>
-        </div>
-      </a>
-
-      <a href="/blog/ustrojstva-dlya-iptv.html" class="blog-card reveal">
-        <div class="blog-card__image">📱</div>
-        <div class="blog-card__body">
-          <span class="blog-card__tag">Обзор</span>
-          <h2 class="blog-card__title">Топ-7 устройств для IPTV в 2026: от бюджетных до премиум</h2>
-          <p class="blog-card__excerpt">Обзор приставок и TV-боксов: что купить для 4K-просмотра и какие модели стоят своих денег.</p>
-          <div class="blog-card__meta">
-            <span>3 сентября 2026</span>
-            <span>·</span>
-            <span>10 мин чтения</span>
-          </div>
-        </div>
-      </a>
-
-      <a href="/blog/arhiv-peredach.html" class="blog-card reveal">
-        <div class="blog-card__image">⏪</div>
-        <div class="blog-card__body">
-          <span class="blog-card__tag">Возможности</span>
-          <h2 class="blog-card__title">Архив передач в IPTV: как смотреть то, что пропустили</h2>
-          <p class="blog-card__excerpt">Рассказываем про Catch-up TV, облачный DVR и как пользоваться этими функциями на разных устройствах.</p>
-          <div class="blog-card__meta">
-            <span>1 сентября 2026</span>
-            <span>·</span>
-            <span>4 мин чтения</span>
-          </div>
-        </div>
-      </a>
-
+      </div>
     </div>
 
-    <!-- Пагинация -->
-    <nav class="pagination" aria-label="Навигация по страницам блога">
-      <span class="pagination__link pagination__link--disabled">←</span>
-      <span class="pagination__link pagination__link--active">1</span>
-      <a href="/blog/page/2.html" class="pagination__link">2</a>
-      <a href="/blog/page/3.html" class="pagination__link">3</a>
-      <a href="/blog/page/2.html" class="pagination__link">→</a>
-    </nav>
+    <!-- Пагинация (рендерится через JS) -->
+    <nav class="pagination" id="pagination" aria-label="Навигация по страницам блога"></nav>
   </div>
 </section>
 
@@ -1094,26 +1141,12 @@ body.modal-open { overflow: hidden; }
 
       <div class="form__group">
         <label class="form__label" for="loginUsername">Логин</label>
-        <input
-          class="form__input"
-          type="text"
-          id="loginUsername"
-          name="username"
-          placeholder="Ваш логин"
-          autocomplete="username"
-          required>
+        <input class="form__input" type="text" id="loginUsername" name="username" placeholder="Ваш логин" autocomplete="username" required>
       </div>
 
       <div class="form__group">
         <label class="form__label" for="loginPassword">Пароль</label>
-        <input
-          class="form__input"
-          type="password"
-          id="loginPassword"
-          name="password"
-          placeholder="Ваш пароль"
-          autocomplete="current-password"
-          required>
+        <input class="form__input" type="password" id="loginPassword" name="password" placeholder="Ваш пароль" autocomplete="current-password" required>
       </div>
 
       <button type="submit" class="btn btn--primary btn--lg form__submit" id="loginSubmitBtn">
@@ -1150,7 +1183,245 @@ body.modal-open { overflow: hidden; }
 </div>
 
 <script>
-// ============ HEADER SCROLL ============
+/* ============================================================
+   БЛОГ: загрузка статей из JSON + пагинация
+   ============================================================ */
+
+const POSTS_URL = '/blog/posts.json';
+const ARTICLES_PER_PAGE = 6;
+
+let allArticles = [];
+let currentPage = 1;
+let totalPages = 1;
+
+const blogGrid = document.getElementById('blogGrid');
+const paginationEl = document.getElementById('pagination');
+
+// ===== Утилита: безопасный HTML =====
+function escapeHtml(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// ===== Получить номер страницы из URL =====
+function getPageFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const p = parseInt(params.get('page'), 10);
+  if (!p || p < 1) return 1;
+  return p;
+}
+
+// ===== Загрузка статей =====
+async function loadArticles() {
+  try {
+    const response = await fetch(POSTS_URL, { cache: 'no-cache' });
+    if (!response.ok) throw new Error('HTTP ' + response.status);
+
+    const data = await response.json();
+    allArticles = Array.isArray(data.articles) ? data.articles : [];
+
+    // Сортируем: свежие сверху (по полю date формата YYYY-MM-DD)
+    allArticles.sort((a, b) => {
+      const da = new Date(a.date || 0).getTime();
+      const db = new Date(b.date || 0).getTime();
+      return db - da;
+    });
+
+    totalPages = Math.max(1, Math.ceil(allArticles.length / ARTICLES_PER_PAGE));
+
+    // Корректируем страницу, если она вне диапазона
+    currentPage = getPageFromUrl();
+    if (currentPage > totalPages) currentPage = totalPages;
+
+    renderPage(currentPage);
+    renderPagination(currentPage);
+
+  } catch (err) {
+    console.error('Ошибка загрузки статей:', err);
+    showError();
+  }
+}
+
+// ===== Рендер карточек текущей страницы =====
+function renderPage(page) {
+  const start = (page - 1) * ARTICLES_PER_PAGE;
+  const end = start + ARTICLES_PER_PAGE;
+  const items = allArticles.slice(start, end);
+
+  blogGrid.innerHTML = '';
+
+  if (items.length === 0) {
+    blogGrid.innerHTML = `
+      <div class="blog-state" style="grid-column: 1 / -1;">
+        <span class="blog-state__icon">📭</span>
+        <div class="blog-state__title">Статей пока нет</div>
+        <p class="blog-state__text">Скоро здесь появятся полезные материалы. Заглядывайте позже!</p>
+      </div>
+    `;
+    return;
+  }
+
+  const fragment = document.createDocumentFragment();
+  items.forEach(article => {
+    fragment.appendChild(createCard(article));
+  });
+  blogGrid.appendChild(fragment);
+
+  // Плавное появление карточек
+  requestAnimationFrame(() => {
+    blogGrid.querySelectorAll('.reveal').forEach((el, i) => {
+      setTimeout(() => el.classList.add('visible'), i * 70);
+    });
+  });
+}
+
+// ===== Создание одной карточки =====
+function createCard(article) {
+  const link = document.createElement('a');
+  link.className = 'blog-card reveal';
+  link.href = article.url || '#';
+
+  // Блок картинки: либо <img>, либо эмодзи
+  let imageBlock;
+  if (article.image) {
+    imageBlock = `
+      <div class="blog-card__image blog-card__image--real">
+        <img src="${escapeHtml(article.image)}"
+             alt="${escapeHtml(article.title || '')}"
+             loading="lazy">
+      </div>
+    `;
+  } else {
+    imageBlock = `
+      <div class="blog-card__image">${escapeHtml(article.emoji || '📄')}</div>
+    `;
+  }
+
+  link.innerHTML = `
+    ${imageBlock}
+    <div class="blog-card__body">
+      <span class="blog-card__tag">${escapeHtml(article.category || 'Статья')}</span>
+      <h2 class="blog-card__title">${escapeHtml(article.title || '')}</h2>
+      <p class="blog-card__excerpt">${escapeHtml(article.excerpt || '')}</p>
+      <div class="blog-card__meta">
+        <span>${escapeHtml(article.dateDisplay || '')}</span>
+        ${article.readTime ? '<span>·</span><span>' + escapeHtml(article.readTime) + '</span>' : ''}
+      </div>
+    </div>
+  `;
+
+  return link;
+}
+
+// ===== Рендер пагинации =====
+function renderPagination(current) {
+  paginationEl.innerHTML = '';
+
+  if (totalPages <= 1) return;
+
+  // Кнопка "назад"
+  const prev = document.createElement('a');
+  prev.className = 'pagination__link' + (current === 1 ? ' pagination__link--disabled' : '');
+  prev.textContent = '←';
+  prev.href = current > 1 ? '?page=' + (current - 1) : '#';
+  prev.setAttribute('aria-label', 'Предыдущая страница');
+  if (current === 1) {
+    prev.addEventListener('click', e => e.preventDefault());
+  }
+  paginationEl.appendChild(prev);
+
+  // Номера страниц (с умным сокращением)
+  const pages = getPageNumbers(current, totalPages);
+  pages.forEach(p => {
+    if (p === '...') {
+      const dots = document.createElement('span');
+      dots.className = 'pagination__dots';
+      dots.textContent = '…';
+      paginationEl.appendChild(dots);
+    } else {
+      const link = document.createElement('a');
+      link.className = 'pagination__link' + (p === current ? ' pagination__link--active' : '');
+      link.textContent = p;
+      link.href = '?page=' + p;
+      if (p === current) {
+        link.setAttribute('aria-current', 'page');
+      }
+      paginationEl.appendChild(link);
+    }
+  });
+
+  // Кнопка "вперёд"
+  const next = document.createElement('a');
+  next.className = 'pagination__link' + (current === totalPages ? ' pagination__link--disabled' : '');
+  next.textContent = '→';
+  next.href = current < totalPages ? '?page=' + (current + 1) : '#';
+  next.setAttribute('aria-label', 'Следующая страница');
+  if (current === totalPages) {
+    next.addEventListener('click', e => e.preventDefault());
+  }
+  paginationEl.appendChild(next);
+}
+
+// ===== Умное сокращение списка страниц =====
+function getPageNumbers(current, total) {
+  const delta = 1;
+  const pages = [];
+
+  if (total <= 7) {
+    for (let i = 1; i <= total; i++) pages.push(i);
+    return pages;
+  }
+
+  pages.push(1);
+
+  if (current > 3) pages.push('...');
+
+  const start = Math.max(2, current - delta);
+  const end = Math.min(total - 1, current + delta);
+
+  for (let i = start; i <= end; i++) pages.push(i);
+
+  if (current < total - 2) pages.push('...');
+
+  pages.push(total);
+  return pages;
+}
+
+// ===== Ошибка загрузки =====
+function showError() {
+  blogGrid.innerHTML = `
+    <div class="blog-state" style="grid-column: 1 / -1;">
+      <span class="blog-state__icon">⚠️</span>
+      <div class="blog-state__title">Не удалось загрузить статьи</div>
+      <p class="blog-state__text">Проверьте подключение к интернету или обновите страницу.</p>
+    </div>
+  `;
+  paginationEl.innerHTML = '';
+}
+
+// ===== Кнопка "наверх" при смене страницы =====
+// (нужно, если пользователь листает без перезагрузки)
+window.addEventListener('popstate', () => {
+  const page = getPageFromUrl();
+  if (page !== currentPage) {
+    currentPage = page;
+    renderPage(currentPage);
+    renderPagination(currentPage);
+  }
+});
+
+// ===== Запуск =====
+loadArticles();
+
+/* ============================================================
+   HEADER + MOBILE MENU + LOGIN MODAL + CHAT (без изменений)
+   ============================================================ */
+
 const header = document.getElementById('header');
 window.addEventListener('scroll', () => {
   if (window.scrollY > 30) {
@@ -1160,7 +1431,6 @@ window.addEventListener('scroll', () => {
   }
 });
 
-// ============ MOBILE MENU ============
 const burger = document.getElementById('burger');
 const nav = document.getElementById('nav');
 
@@ -1176,27 +1446,7 @@ nav.querySelectorAll('.nav__link').forEach(link => {
   });
 });
 
-// ============ SCROLL REVEAL ============
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry, index) => {
-    if (entry.isIntersecting) {
-      setTimeout(() => {
-        entry.target.classList.add('visible');
-      }, index * 80);
-      revealObserver.unobserve(entry.target);
-    }
-  });
-}, {
-  threshold: 0.1,
-  rootMargin: '0px 0px -50px 0px'
-});
-
-document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-// ============================================================
-// MODAL ВХОДА
-// Бэкенда нет — на любую пару логин/пароль показываем ошибку
-// ============================================================
+// ===== МОДАЛ ВХОДА =====
 const loginModal = document.getElementById('loginModal');
 const loginForm = document.getElementById('loginForm');
 const loginError = document.getElementById('loginError');
@@ -1268,10 +1518,7 @@ loginForm.addEventListener('submit', function(e) {
   }, 700);
 });
 
-// ============================================================
-// CHAT: плавающая кнопка + система уведомлений
-// Синхронизируется с chat.html через localStorage
-// ============================================================
+// ===== ЧАТ: плавающая кнопка + уведомления =====
 (function() {
   const CHAT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzp_AuStIiDbYe7db98WjM-BqMZdgxrQdVkH6LgpX6x3Wb2JfXAqQafcmEBjlosZRY/exec';
   const LAST_READ_KEY = 'techtv_last_read_ts';
@@ -1301,8 +1548,7 @@ loginForm.addEventListener('submit', function(e) {
     const lastRead = new Date(getLastReadTs()).getTime();
     return messages.filter(m => {
       if (m.userID !== 'manager') return false;
-      const t = new Date(m.timestamp).getTime();
-      return t > lastRead;
+      return new Date(m.timestamp).getTime() > lastRead;
     }).length;
   }
 
@@ -1311,7 +1557,6 @@ loginForm.addEventListener('submit', function(e) {
       const display = unreadCount > 99 ? '99+' : String(unreadCount);
       fabBadge.textContent = display;
       fabBadge.classList.add('show');
-
       notifyCount.textContent = display;
       notifyText.textContent = lastMessage && lastMessage.message
         ? lastMessage.message.slice(0, 120)
@@ -1330,17 +1575,12 @@ loginForm.addEventListener('submit', function(e) {
       if (!r.ok) return;
       const data = await r.json();
       if (!data || data.error) return;
-
       const messages = data.messages || [];
       const unreadCount = countUnread(messages);
-
       const managerMsgs = messages.filter(m => m.userID === 'manager');
       const lastMessage = managerMsgs.length ? managerMsgs[managerMsgs.length - 1] : null;
-
       updateUI(unreadCount, lastMessage);
-    } catch (e) {
-      // тихо игнорируем
-    }
+    } catch (e) {}
   }
 
   notifyClose.addEventListener('click', function(e) {
@@ -1355,9 +1595,7 @@ loginForm.addEventListener('submit', function(e) {
   });
 
   window.addEventListener('storage', function(e) {
-    if (e.key === LAST_READ_KEY) {
-      pollMessages();
-    }
+    if (e.key === LAST_READ_KEY) pollMessages();
   });
 
   window.addEventListener('focus', pollMessages);
