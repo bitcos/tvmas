@@ -1111,6 +1111,194 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
 .modal__success-title { font-size: 1.375rem; margin-bottom: 10px; }
 .modal__success-text { color: var(--text-secondary); font-size: 0.9375rem; margin-bottom: 24px; line-height: 1.5; }
 
+/* ============ FLOATING CHAT BUTTON ============ */
+.chat-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1500;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--gradient);
+  color: #0a0a0f;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 32px var(--accent-glow), 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  text-decoration: none;
+}
+
+.chat-fab:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 12px 40px var(--accent-glow), 0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+.chat-fab:active { transform: scale(0.96); }
+
+.chat-fab__icon { font-size: 1.5rem; line-height: 1; }
+
+.chat-fab__badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 100px;
+  background: #ff3d5c;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 800;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 3px var(--bg-primary);
+  animation: pulseBadge 2s ease-in-out infinite;
+}
+
+.chat-fab__badge.show { display: flex; }
+
+@keyframes pulseBadge {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+/* ============ NOTIFICATION TOAST ============ */
+.chat-notify {
+  position: fixed;
+  top: 88px;
+  right: 24px;
+  z-index: 1600;
+  max-width: 360px;
+  background: linear-gradient(180deg, #1a1a24 0%, #12121a 100%);
+  border: 1px solid rgba(0, 212, 255, 0.4);
+  border-radius: var(--radius-sm);
+  padding: 16px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 212, 255, 0.1);
+  cursor: pointer;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  transform: translateX(120%);
+  pointer-events: none;
+}
+
+.chat-notify.show {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.chat-notify::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--gradient);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+.chat-notify__icon {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 12px;
+  background: var(--gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  color: #0a0a0f;
+  position: relative;
+}
+
+.chat-notify__count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 100px;
+  background: #ff3d5c;
+  color: #fff;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 3px #1a1a24;
+}
+
+.chat-notify__body {
+  flex: 1;
+  min-width: 0;
+  padding-right: 20px;
+}
+
+.chat-notify__title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.chat-notify__title::after {
+  content: 'Новое';
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  background: rgba(0, 212, 255, 0.15);
+  color: var(--accent);
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.chat-notify__text {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.chat-notify__close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  line-height: 1;
+}
+
+.chat-notify__close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
+
 /* ============ RESPONSIVE ============ */
 @media (max-width: 968px) {
   section { padding: 72px 0; }
@@ -1164,6 +1352,21 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
   .footer__bottom { flex-direction: column; text-align: center; }
   .modal__head { flex-direction: column; text-align: center; gap: 12px; }
   .modal__icon { margin: 0 auto; }
+
+  .chat-fab {
+    bottom: 16px;
+    right: 16px;
+    width: 54px;
+    height: 54px;
+  }
+  .chat-fab__icon { font-size: 1.25rem; }
+
+  .chat-notify {
+    top: 76px;
+    left: 16px;
+    right: 16px;
+    max-width: none;
+  }
 }
 
 /* ============ SCROLL REVEAL ============ */
@@ -1302,6 +1505,7 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
       <a href="#pricing" class="nav__link">Тариф</a>
       <a href="#how" class="nav__link">Как подключить</a>
       <a href="/blog.html" class="nav__link">Блог</a>
+      <a href="/chat.html" class="nav__link">Чат</a>
       <a href="#faq" class="nav__link">FAQ</a>
     </nav>
 
@@ -1467,7 +1671,7 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
   </div>
 </section>
 
-<!-- ============ PRICING (single tariff) ============ -->
+<!-- ============ PRICING ============ -->
 <section class="pricing" id="pricing">
   <div class="container">
     <h2 class="section-title reveal">Один простой тариф</h2>
@@ -1746,7 +1950,7 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
         <h4 class="footer__title">Поддержка</h4>
         <ul class="footer__links">
           <li><a href="#faq">FAQ</a></li>
-          <li><a href="#">Чат 24/7</a></li>
+          <li><a href="/chat.html">Чат 24/7</a></li>
           <li><a href="/blog.html">Инструкции</a></li>
           <li><a href="#">Контакты</a></li>
         </ul>
@@ -1851,10 +2055,28 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
   </div>
 </div>
 
+<!-- ============ FLOATING CHAT BUTTON ============ -->
+<a href="/chat.html" target="_blank" rel="noopener" class="chat-fab" id="chatFab" aria-label="Открыть чат поддержки">
+  <span class="chat-fab__icon">💬</span>
+  <span class="chat-fab__badge" id="chatFabBadge">0</span>
+</a>
+
+<!-- ============ NOTIFICATION TOAST ============ -->
+<div class="chat-notify" id="chatNotify" role="alert" aria-live="polite">
+  <button class="chat-notify__close" id="chatNotifyClose" aria-label="Закрыть">✕</button>
+  <div class="chat-notify__icon">
+    💬
+    <span class="chat-notify__count" id="chatNotifyCount">1</span>
+  </div>
+  <div class="chat-notify__body">
+    <div class="chat-notify__title">Ответ поддержки</div>
+    <div class="chat-notify__text" id="chatNotifyText">У вас новое сообщение в чате.</div>
+  </div>
+</div>
+
 <script>
 // ============ НАСТРОЙКИ ОТПРАВКИ ============
-// URL веб-приложения Google Apps Script (получишь после деплоя)
-const LEAD_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxcEy9aADf5UFZbw3PooHSOHy5gHg6uAKRA3ENwv6IhtiVAyi-kfVjMfi8YU0rWFUji/exec';
+const LEAD_ENDPOINT = 'https://script.google.com/macros/s/ВСТАВЬ_СЮДА_ID/exec';
 
 // ============ HEADER SCROLL ============
 const header = document.getElementById('header');
@@ -1968,7 +2190,6 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// ============ ОТПРАВКА ФОРМЫ В GOOGLE SCRIPT → TELEGRAM ============
 leadForm.addEventListener('submit', async function(e) {
   e.preventDefault();
 
@@ -1977,7 +2198,6 @@ leadForm.addEventListener('submit', async function(e) {
   const messengers = document.getElementById('messengers');
   const submitBtn = this.querySelector('button[type="submit"]');
 
-  // Валидация
   let valid = true;
   [name, phone, messengers].forEach(field => {
     field.style.borderColor = '';
@@ -1993,7 +2213,6 @@ leadForm.addEventListener('submit', async function(e) {
     return;
   }
 
-  // Собираем данные
   const formData = {
     name: name.value.trim(),
     phone: phone.value.trim(),
@@ -2003,7 +2222,6 @@ leadForm.addEventListener('submit', async function(e) {
     timestamp: new Date().toISOString()
   };
 
-  // Блокируем кнопку и показываем загрузку
   const originalText = submitBtn.innerHTML;
   submitBtn.disabled = true;
   submitBtn.innerHTML = 'Отправка...';
@@ -2011,8 +2229,6 @@ leadForm.addEventListener('submit', async function(e) {
   try {
     const response = await fetch(LEAD_ENDPOINT, {
       method: 'POST',
-      // ВАЖНО: text/plain, чтобы избежать CORS-preflight
-      // (Apps Script его не обрабатывает). Внутри — обычный JSON.
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(formData)
     });
@@ -2020,7 +2236,6 @@ leadForm.addEventListener('submit', async function(e) {
     const result = await response.json();
 
     if (result && result.ok) {
-      // Успех — показываем экран благодарности
       modalFormWrap.style.display = 'none';
       modalSuccess.classList.add('active');
       leadForm.reset();
@@ -2032,11 +2247,108 @@ leadForm.addEventListener('submit', async function(e) {
     console.error('Ошибка отправки заявки:', err);
     alert('Не удалось отправить заявку. Пожалуйста, попробуйте ещё раз или свяжитесь с нами напрямую.');
   } finally {
-    // Возвращаем кнопку в исходное состояние
     submitBtn.disabled = false;
     submitBtn.innerHTML = originalText;
   }
 });
+
+// ============================================================
+// CHAT: плавающая кнопка + система уведомлений
+// Синхронизируется с chat.html через localStorage
+// ============================================================
+(function() {
+  const CHAT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzp_AuStIiDbYe7db98WjM-BqMZdgxrQdVkH6LgpX6x3Wb2JfXAqQafcmEBjlosZRY/exec';
+  const LAST_READ_KEY = 'techtv_last_read_ts';
+  const POLL_INTERVAL = 8000;
+
+  let userID = localStorage.getItem('chat_user_id');
+  if (!userID) {
+    userID = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
+    localStorage.setItem('chat_user_id', userID);
+  }
+
+  const fab = document.getElementById('chatFab');
+  const fabBadge = document.getElementById('chatFabBadge');
+  const notify = document.getElementById('chatNotify');
+  const notifyCount = document.getElementById('chatNotifyCount');
+  const notifyText = document.getElementById('chatNotifyText');
+  const notifyClose = document.getElementById('chatNotifyClose');
+
+  if (!fab || !notify) return;
+
+  function getLastReadTs() {
+    return localStorage.getItem(LAST_READ_KEY) || '1970-01-01T00:00:00.000Z';
+  }
+
+  function countUnread(messages) {
+    if (!Array.isArray(messages)) return 0;
+    const lastRead = new Date(getLastReadTs()).getTime();
+    return messages.filter(m => {
+      if (m.userID !== 'manager') return false;
+      const t = new Date(m.timestamp).getTime();
+      return t > lastRead;
+    }).length;
+  }
+
+  function updateUI(unreadCount, lastMessage) {
+    if (unreadCount > 0) {
+      const display = unreadCount > 99 ? '99+' : String(unreadCount);
+      fabBadge.textContent = display;
+      fabBadge.classList.add('show');
+
+      notifyCount.textContent = display;
+      notifyText.textContent = lastMessage && lastMessage.message
+        ? lastMessage.message.slice(0, 120)
+        : 'У вас новое сообщение в чате поддержки.';
+      notify.classList.add('show');
+    } else {
+      fabBadge.classList.remove('show');
+      notify.classList.remove('show');
+    }
+  }
+
+  async function pollMessages() {
+    try {
+      const url = CHAT_ENDPOINT + '?userID=' + encodeURIComponent(userID);
+      const r = await fetch(url, { cache: 'no-cache' });
+      if (!r.ok) return;
+      const data = await r.json();
+      if (!data || data.error) return;
+
+      const messages = data.messages || [];
+      const unreadCount = countUnread(messages);
+
+      const managerMsgs = messages.filter(m => m.userID === 'manager');
+      const lastMessage = managerMsgs.length ? managerMsgs[managerMsgs.length - 1] : null;
+
+      updateUI(unreadCount, lastMessage);
+    } catch (e) {
+      // тихо игнорируем
+    }
+  }
+
+  notifyClose.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    notify.classList.remove('show');
+  });
+
+  notify.addEventListener('click', function(e) {
+    if (e.target.closest('.chat-notify__close')) return;
+    window.open('/chat.html', '_blank', 'noopener');
+  });
+
+  window.addEventListener('storage', function(e) {
+    if (e.key === LAST_READ_KEY) {
+      pollMessages();
+    }
+  });
+
+  window.addEventListener('focus', pollMessages);
+
+  pollMessages();
+  setInterval(pollMessages, POLL_INTERVAL);
+})();
 </script>
 
 </body>
