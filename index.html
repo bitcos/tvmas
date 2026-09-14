@@ -359,11 +359,8 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
 }
 
 .tv-mockup__screen {
-  aspect-ratio: 16 / 10;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16162a 50%, #0f0f1a 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  aspect-ratio: 16 / 9;
+  background: #0a0a0f;
   position: relative;
   overflow: hidden;
 }
@@ -373,35 +370,19 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 20% 30%, rgba(0, 212, 255, 0.2), transparent 40%),
-    radial-gradient(circle at 80% 70%, rgba(123, 97, 255, 0.2), transparent 40%);
+    radial-gradient(circle at 20% 30%, rgba(0, 212, 255, 0.15), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(123, 97, 255, 0.15), transparent 40%);
+  pointer-events: none;
+  z-index: 0;
 }
 
-.tv-mockup__play {
-  width: 80px; height: 80px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
+.tv-mockup__screen iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
   z-index: 1;
-  animation: pulsePlay 3s ease-in-out infinite;
-}
-
-.tv-mockup__play::after {
-  content: '';
-  border-style: solid;
-  border-width: 14px 0 14px 22px;
-  border-color: transparent transparent transparent #ffffff;
-  margin-left: 6px;
-}
-
-@keyframes pulsePlay {
-  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.5); }
-  50% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(0, 212, 255, 0); }
 }
 
 .tv-mockup__bar {
@@ -429,6 +410,7 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
   gap: 12px;
   animation: floatCard 4s ease-in-out infinite;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  z-index: 2;
 }
 
 .floating-card--1 { top: 10%; right: -20px; animation-delay: 0s; }
@@ -1571,7 +1553,13 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
           <span></span><span></span><span></span>
         </div>
         <div class="tv-mockup__screen">
-          <div class="tv-mockup__play"></div>
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/7-uTAdrpgmU?autoplay=1&mute=1&loop=1&playlist=7-uTAdrpgmU&controls=1&modestbranding=1&rel=0&playsinline=1"
+            title="TechTV — демонстрация сервиса"
+            loading="lazy"
+            allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+            allowfullscreen
+          ></iframe>
         </div>
       </div>
 
@@ -1671,7 +1659,7 @@ h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
   </div>
 </section>
 
-<!-- ============ PRICING ============ -->
+<!-- ============ PRICING (single tariff) ============ -->
 <section class="pricing" id="pricing">
   <div class="container">
     <h2 class="section-title reveal">Один простой тариф</h2>
@@ -2323,7 +2311,7 @@ leadForm.addEventListener('submit', async function(e) {
 
       updateUI(unreadCount, lastMessage);
     } catch (e) {
-      // тихо игнорируем
+      // тихо игнорируем сетевые ошибки
     }
   }
 
