@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Блог о IPTV — StreamX | Гайды, инструкции, сравнения</title>
+<meta name="description" content="Полезные статьи об IPTV: как выбрать провайдера, настроить на Smart TV, какая скорость интернета нужна для 4K. Гайды, инструкции и советы от экспертов StreamX.">
+<meta name="keywords" content="IPTV блог, как настроить IPTV, IPTV гайд, скорость интернета для IPTV, Smart TV настройка">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<link rel="canonical" href="https://ip-tv.tech/blog.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Блог о IPTV — StreamX">
+<meta property="og:description" content="Полезные статьи об IPTV: гайды, инструкции и советы от экспертов.">
+<meta property="og:url" content="https://ip-tv.tech/blog.html">
+<meta property="og:image" content="https://ip-tv.tech/og-blog.jpg">
+<meta property="og:site_name" content="StreamX">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Блог о IPTV — StreamX">
+<meta name="twitter:description" content="Полезные статьи об IPTV: гайды, инструкции и советы.">
+
+<style>
+/* ============ RESET & BASE ============ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #12121a;
+  --bg-card: #1a1a24;
+  --bg-card-hover: #22222e;
+  --border: #2a2a3a;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0b0;
+  --text-muted: #6a6a7a;
+  --accent: #00d4ff;
+  --accent-glow: rgba(0, 212, 255, 0.4);
+  --gradient: linear-gradient(135deg, #00d4ff 0%, #7b61ff 100%);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Roboto, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+
+/* ============ HEADER ============ */
+.header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 16px 0;
+  transition: var(--transition);
+  backdrop-filter: blur(0px);
+}
+
+.header.scrolled {
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 0;
+}
+
+.header__inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.logo__icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: var(--gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+.nav { display: flex; gap: 32px; align-items: center; }
+
+.nav__link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  transition: var(--transition);
+  position: relative;
+}
+
+.nav__link:hover { color: var(--text-primary); }
+
+.nav__link::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -6px;
+  width: 0; height: 2px;
+  background: var(--gradient);
+  transition: width 0.3s ease;
+}
+
+.nav__link:hover::after { width: 100%; }
+
+.header__actions { display: flex; align-items: center; gap: 12px; }
+
+.burger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; }
+.burger span { display: block; width: 24px; height: 2px; background: var(--text-primary); border-radius: 2px; transition: var(--transition); }
+
+/* ============ BUTTONS ============ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.btn--primary {
+  background: var(--gradient);
+  color: #0a0a0f;
+  box-shadow: 0 4px 24px var(--accent-glow);
+}
+
+.btn--primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px var(--accent-glow); }
+
+.btn--secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+
+.btn--secondary:hover { background: var(--bg-card); border-color: var(--accent); }
+
+.btn--lg { padding: 18px 40px; font-size: 1.0625rem; }
+
+/* ============ BLOG HERO ============ */
+.blog-hero {
+  padding: 160px 0 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.blog-hero::before {
+  content: '';
+  position: absolute;
+  top: -30%; left: 50%;
+  transform: translateX(-50%);
+  width: 800px; height: 800px;
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.12), transparent 60%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.blog-hero__title {
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  margin-bottom: 16px;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  z-index: 1;
+}
+
+.blog-hero__text {
+  color: var(--text-secondary);
+  font-size: 1.125rem;
+  max-width: 640px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ============ BLOG LIST ============ */
+.blog-list { padding: 40px 0 100px; }
+
+.blog-list__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 28px;
+  margin-bottom: 60px;
+}
+
+.blog-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: var(--transition);
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+}
+
+.blog-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(0, 212, 255, 0.4);
+  background: var(--bg-card-hover);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.blog-card__image {
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16162a 50%, #0f0f1a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.blog-card__image::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(0, 212, 255, 0.15), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(123, 97, 255, 0.15), transparent 40%);
+}
+
+.blog-card__body { padding: 24px; display: flex; flex-direction: column; flex: 1; }
+
+.blog-card__tag {
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 100px;
+  font-size: 0.75rem;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 14px;
+  align-self: flex-start;
+}
+
+.blog-card__title { font-size: 1.25rem; margin-bottom: 12px; line-height: 1.3; }
+.blog-card__excerpt { color: var(--text-secondary); font-size: 0.9375rem; flex: 1; margin-bottom: 20px; }
+
+.blog-card__meta {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+/* ============ PAGINATION ============ */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pagination__link {
+  min-width: 44px;
+  height: 44px;
+  padding: 0 14px;
+  border-radius: 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.pagination__link:hover { border-color: var(--accent); color: var(--text-primary); background: var(--bg-card-hover); }
+
+.pagination__link--active {
+  background: var(--gradient);
+  color: #0a0a0f;
+  border-color: transparent;
+  box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+.pagination__link--disabled { opacity: 0.4; pointer-events: none; }
+
+/* ============ CTA ============ */
+.cta { padding: 100px 0; text-align: center; position: relative; overflow: hidden; }
+
+.cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(0, 212, 255, 0.15), transparent 60%);
+  pointer-events: none;
+}
+
+.cta__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  margin: 0 auto;
+  background: linear-gradient(180deg, rgba(0, 212, 255, 0.1) 0%, rgba(123, 97, 255, 0.1) 100%);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 24px;
+  padding: 64px 40px;
+}
+
+.cta__title { font-size: clamp(1.75rem, 3.5vw, 2.75rem); margin-bottom: 16px; }
+.cta__text { color: var(--text-secondary); font-size: 1.125rem; margin-bottom: 32px; }
+.cta__actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+/* ============ FOOTER ============ */
+.footer { background: var(--bg-secondary); border-top: 1px solid var(--border); padding: 64px 0 32px; }
+.footer__grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+.footer__brand { max-width: 320px; }
+.footer__text { color: var(--text-secondary); font-size: 0.9375rem; margin: 16px 0 24px; }
+.footer__socials { display: flex; gap: 12px; }
+
+.footer__social {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: var(--transition);
+  font-size: 1rem;
+}
+
+.footer__social:hover { background: var(--gradient); color: var(--bg-primary); border-color: transparent; transform: translateY(-3px); }
+
+.footer__title { font-size: 0.875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-primary); margin-bottom: 20px; }
+.footer__links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.footer__links a { color: var(--text-secondary); text-decoration: none; font-size: 0.9375rem; transition: var(--transition); }
+.footer__links a:hover { color: var(--accent); }
+
+.footer__bottom {
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 968px) {
+  .footer__grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .footer__brand { grid-column: 1 / -1; max-width: 100%; }
+  .blog-list__grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+}
+
+@media (max-width: 768px) {
+  .nav {
+    position: fixed;
+    top: 68px; left: 0; right: 0;
+    background: rgba(10, 10, 15, 0.98);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    padding: 32px 24px;
+    gap: 24px;
+    border-bottom: 1px solid var(--border);
+    transform: translateY(-120%);
+    transition: transform 0.3s ease;
+  }
+  .nav.active { transform: translateY(0); }
+  .nav__link { font-size: 1.125rem; }
+  .burger { display: flex; }
+  .header__actions .btn--secondary { display: none; }
+  .blog-list__grid { grid-template-columns: 1fr; }
+  .cta__inner { padding: 48px 24px; }
+}
+
+@media (max-width: 480px) {
+  .container { padding: 0 16px; }
+  .footer__grid { grid-template-columns: 1fr; }
+  .footer__bottom { flex-direction: column; text-align: center; }
+  .pagination__link { min-width: 40px; height: 40px; font-size: 0.875rem; }
+}
+
+/* ============ SCROLL REVEAL ============ */
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+
+<!-- ============ SCHEMA.ORG: BLOG ============ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Блог StreamX — всё об IPTV",
+  "description": "Полезные статьи об IPTV: как выбрать провайдера, настроить на Smart TV, какая скорость интернета нужна для 4K.",
+  "url": "https://ip-tv.tech/blog.html",
+  "publisher": {
+    "@type": "Organization",
+    "name": "StreamX",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ip-tv.tech/logo.png"
+    }
+  },
+  "inLanguage": "ru-RU"
+}
+</script>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="/" class="logo">
+      <div class="logo__icon">▶</div>
+      StreamX
+    </a>
+
+    <nav class="nav" id="nav">
+      <a href="/#features" class="nav__link">Возможности</a>
+      <a href="/#devices" class="nav__link">Устройства</a>
+      <a href="/#pricing" class="nav__link">Тариф</a>
+      <a href="/#how" class="nav__link">Как подключить</a>
+      <a href="/blog.html" class="nav__link">Блог</a>
+      <a href="/#faq" class="nav__link">FAQ</a>
+    </nav>
+
+    <div class="header__actions">
+      <a href="/" class="btn btn--secondary">На главную</a>
+      <a href="/#pricing" class="btn btn--primary">Подать заявку</a>
+      <button class="burger" id="burger" aria-label="Меню">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ BLOG HERO ============ -->
+<section class="blog-hero">
+  <div class="container">
+    <h1 class="blog-hero__title">Блог о IPTV</h1>
+    <p class="blog-hero__text">
+      Разбираемся в технологиях, сравниваем устройства и делимся лайфхаками для идеального просмотра
+    </p>
+  </div>
+</section>
+
+<!-- ============ BLOG LIST ============ -->
+<section class="blog-list">
+  <div class="container">
+    <div class="blog-list__grid">
+
+      <a href="/blog/kak-vybrat-iptv.html" class="blog-card reveal">
+        <div class="blog-card__image">📊</div>
+        <div class="blog-card__body">
+          <span class="blog-card__tag">Гайд</span>
+          <h2 class="blog-card__title">Как выбрать IPTV-провайдера в 2026 году: 7 главных критериев</h2>
+          <p class="blog-card__excerpt">На что смотреть, чтобы не наткнуться на мошенников и получить стабильный сервис без буферизации.</p>
+          <div class="blog-card__meta">
+            <span>12 сентября 2026</span>
+            <span>·</span>
+            <span>8 мин чтения</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="/blog/nastrojka-na-smart-tv.html" class="blog-card reveal">
+        <div class="blog-card__image">📺</div>
+        <div class="blog-card__body">
+          <span class="blog-card__tag">Инструкция</span>
+          <h2 class="blog-card__title">Настройка IPTV на Smart TV Samsung и LG: пошаговая инструкция</h2>
+          <p class="blog-card__excerpt">Подробный гайд с картинками: как установить приложение и настроить плейлист за 10 минут.</p>
+          <div class="blog-card__meta">
+            <span>10 сентября 2026</span>
+            <span>·</span>
+            <span>6 мин чтения</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="/blog/skorost-interneta.html" class="blog-card reveal">
+        <div class="blog-card__image">⚡</div>
+        <div class="blog-card__body">
+          <span class="blog-card__tag">Технологии</span>
+          <h2 class="blog-card__title">Какая скорость интернета нужна для IPTV в 4K: таблица и советы</h2>
+          <p class="blog-card__excerpt">Разбираем, почему ваш интернет может тормозить и как исправить это за 5 минут.</p>
+          <div class="blog-card__meta">
+            <span>8 сентября 2026</span>
+            <span>·</span>
+            <span>5 мин чтения</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="/blog/iptv-vs-kabelnoe-tv.html" class="blog-card reveal">
+        <div class="blog-card__image">🔄</div>
+        <div class="blog-card__body">
+          <span class="blog-card__tag">Сравнение</span>
+          <h2 class="blog-card__title">IPTV vs кабельное ТВ: что выбрать в 2026 году</h2>
+          <p class="blog-card__excerpt">Сравниваем цену, качество, удобство и возможности. Разбираем, почему всё больше людей отказываются от кабеля.</p>
+          <div class="blog-card__meta">
+            <span>5 сентября 2026</span>
+            <span>·</span>
+            <span>7 мин чтения</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="/blog/ustrojstva-dlya-iptv.html" class="blog-card reveal">
+        <div class="blog-card__image">📱</div>
+        <div class="blog-card__body">
+          <span class="blog-card__tag">Обзор</span>
+          <h2 class="blog-card__title">Топ-7 устройств для IPTV в 2026: от бюджетных до премиум</h2>
+          <p class="blog-card__excerpt">Обзор приставок и TV-боксов: что купить для 4K-просмотра и какие модели стоят своих денег.</p>
+          <div class="blog-card__meta">
+            <span>3 сентября 2026</span>
+            <span>·</span>
+            <span>10 мин чтения</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="/blog/arhiv-peredach.html" class="blog-card reveal">
+        <div class="blog-card__image">⏪</div>
+        <div class="blog-card__body">
+          <span class="blog-card__tag">Возможности</span>
+          <h2 class="blog-card__title">Архив передач в IPTV: как смотреть то, что пропустили</h2>
+          <p class="blog-card__excerpt">Рассказываем про Catch-up TV, облачный DVR и как пользоваться этими функциями на разных устройствах.</p>
+          <div class="blog-card__meta">
+            <span>1 сентября 2026</span>
+            <span>·</span>
+            <span>4 мин чтения</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- Пагинация -->
+    <nav class="pagination" aria-label="Навигация по страницам блога">
+      <span class="pagination__link pagination__link--disabled">←</span>
+      <span class="pagination__link pagination__link--active">1</span>
+      <a href="/blog/page/2.html" class="pagination__link">2</a>
+      <a href="/blog/page/3.html" class="pagination__link">3</a>
+      <a href="/blog/page/2.html" class="pagination__link">→</a>
+    </nav>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta">
+  <div class="container">
+    <div class="cta__inner">
+      <h2 class="cta__title">Готовы попробовать IPTV?</h2>
+      <p class="cta__text">Оставьте заявку — специалист свяжется, ответит на вопросы и поможет установить сервис на любое устройство.</p>
+      <div class="cta__actions">
+        <a href="/#pricing" class="btn btn--primary btn--lg">Подать заявку</a>
+        <a href="/#faq" class="btn btn--secondary btn--lg">Читать FAQ</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="/" class="logo">
+          <div class="logo__icon">▶</div>
+          StreamX
+        </a>
+        <p class="footer__text">
+          IP-телевидение нового поколения. Более 15 000 каналов и фильмов в 4K HDR на любом устройстве.
+        </p>
+        <div class="footer__socials">
+          <a href="#" class="footer__social" aria-label="Telegram">✈</a>
+          <a href="#" class="footer__social" aria-label="YouTube">▶</a>
+          <a href="#" class="footer__social" aria-label="Instagram">◉</a>
+          <a href="#" class="footer__social" aria-label="VK">VK</a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="footer__title">Продукт</h4>
+        <ul class="footer__links">
+          <li><a href="/#features">Возможности</a></li>
+          <li><a href="/#pricing">Тариф</a></li>
+          <li><a href="/#devices">Устройства</a></li>
+          <li><a href="/blog.html">Блог</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer__title">Компания</h4>
+        <ul class="footer__links">
+          <li><a href="#">О нас</a></li>
+          <li><a href="/blog.html">Блог</a></li>
+          <li><a href="#">Партнёрам</a></li>
+          <li><a href="#">Вакансии</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer__title">Поддержка</h4>
+        <ul class="footer__links">
+          <li><a href="/#faq">FAQ</a></li>
+          <li><a href="#">Чат 24/7</a></li>
+          <li><a href="/blog.html">Инструкции</a></li>
+          <li><a href="#">Контакты</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <div>© 2026 StreamX. Все права защищены.</div>
+      <div>
+        <a href="#" style="color: inherit; text-decoration: none;">Политика конфиденциальности</a>
+        &nbsp;·&nbsp;
+        <a href="#" style="color: inherit; text-decoration: none;">Условия использования</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ============ HEADER SCROLL ============
+const header = document.getElementById('header');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 30) {
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
+  }
+});
+
+// ============ MOBILE MENU ============
+const burger = document.getElementById('burger');
+const nav = document.getElementById('nav');
+
+burger.addEventListener('click', () => {
+  burger.classList.toggle('active');
+  nav.classList.toggle('active');
+});
+
+nav.querySelectorAll('.nav__link').forEach(link => {
+  link.addEventListener('click', () => {
+    burger.classList.remove('active');
+    nav.classList.remove('active');
+  });
+});
+
+// ============ SCROLL REVEAL ============
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, index) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => {
+        entry.target.classList.add('visible');
+      }, index * 80);
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+});
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+</script>
+
+</body>
+</html>
