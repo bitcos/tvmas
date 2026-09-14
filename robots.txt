@@ -1,0 +1,41 @@
+# robots.txt для ip-tv.tech
+# Основные поисковые системы
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /private/
+Disallow: /*.json$
+Disallow: /*?sessionid=
+
+# Google
+User-agent: Googlebot
+Allow: /
+
+# Яндекс
+User-agent: Yandex
+Allow: /
+Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term
+
+# AI-краулеры (для попадания в ChatGPT, Claude, Perplexity)
+User-agent: GPTBot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /admin/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin/
+
+User-agent: Google-Extended
+Allow: /
+
+# Sitemap
+Sitemap: https://ip-tv.tech/sitemap.xml
