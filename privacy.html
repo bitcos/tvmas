@@ -753,7 +753,7 @@ body {
 <footer class="footer">
   <div class="container">
     <div class="footer__bottom">
-      <div>© 2026 TechTV. Все права защищены.</div>
+      <div>© <span id="currentYear"></span> TechTV. Все права защищены.</div>
       <div>
         <a href="/">На главную</a>
         &nbsp;·&nbsp;
@@ -765,6 +765,14 @@ body {
       </div>
     </div>
   </div>
+<script>
+(function() {
+  const yearEl = document.getElementById('currentYear');
+  if (yearEl) {
+    yearEl.textContent = new Date().getFullYear();
+  }
+})();
+</script>
 </footer>
 
 <script>
