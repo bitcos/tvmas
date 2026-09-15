@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Политика конфиденциальности — TechTV</title>
+<meta name="description" content="Политика конфиденциальности TechTV: какие данные мы собираем, как используем и защищаем. Информация об обработке персональных данных, cookie и аналитике.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://ip-tv.tech/privacy.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Политика конфиденциальности — TechTV">
+<meta property="og:description" content="Как TechTV собирает, использует и защищает ваши персональные данные.">
+<meta property="og:url" content="https://ip-tv.tech/privacy.html">
+<meta property="og:image" content="https://ip-tv.tech/og-image.jpg">
+<meta property="og:site_name" content="TechTV">
+<meta property="og:locale" content="ru_RU">
+
+<!-- Favicon -->
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+
+<style>
+/* ============ RESET & BASE ============ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #12121a;
+  --bg-card: #1a1a24;
+  --bg-card-hover: #22222e;
+  --border: #2a2a3a;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0b0;
+  --text-muted: #6a6a7a;
+  --accent: #00d4ff;
+  --accent-glow: rgba(0, 212, 255, 0.4);
+  --gradient: linear-gradient(135deg, #00d4ff 0%, #7b61ff 100%);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: #00d4ff #0a0a0f;
+}
+
+/* ============ CUSTOM SCROLLBAR ============ */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00d4ff 0%, #7b61ff 100%);
+  border-radius: 100px;
+  border: 2px solid var(--bg-primary);
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #33ddff 0%, #9b7bff 100%);
+  background-clip: padding-box;
+  border: 2px solid var(--bg-primary);
+}
+::-webkit-scrollbar-corner { background: var(--bg-primary); }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Roboto, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+
+/* ============ HEADER ============ */
+.header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 16px 0;
+  transition: var(--transition);
+  backdrop-filter: blur(0px);
+}
+
+.header.scrolled {
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 0;
+}
+
+.header__inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.375rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.logo__icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: var(--gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+/* ============ BUTTONS ============ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.btn--secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+
+.btn--secondary:hover { background: var(--bg-card); border-color: var(--accent); }
+
+.btn--primary {
+  background: var(--gradient);
+  color: #0a0a0f;
+  box-shadow: 0 4px 24px var(--accent-glow);
+}
+
+.btn--primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px var(--accent-glow); }
+
+/* ============ PAGE ============ */
+.page {
+  padding: 140px 0 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.page::before {
+  content: '';
+  position: absolute;
+  top: -20%; right: -10%;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.12), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.page::after {
+  content: '';
+  position: absolute;
+  bottom: -20%; left: -10%;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(123, 97, 255, 0.12), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.page__breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.page__breadcrumbs a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.page__breadcrumbs a:hover { color: var(--accent); }
+.page__breadcrumbs span.sep { opacity: 0.5; }
+
+.page__title {
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  margin-bottom: 16px;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  position: relative;
+  z-index: 1;
+}
+
+.page__updated {
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ============ CONTENT ============ */
+.content {
+  max-width: 820px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Оглавление */
+.toc {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  margin-bottom: 48px;
+}
+
+.toc__title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.toc__list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 24px;
+}
+
+.toc__link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.9375rem;
+  transition: var(--transition);
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.toc__link:hover { color: var(--accent); }
+
+.toc__link span.num {
+  color: var(--accent);
+  font-weight: 700;
+  min-width: 20px;
+}
+
+/* Секции */
+.section {
+  margin-bottom: 44px;
+  scroll-margin-top: 100px;
+}
+
+.section h2 {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.section h2::before {
+  content: attr(data-num);
+  color: var(--accent);
+  font-size: 1.125rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.section h3 {
+  font-size: 1.125rem;
+  color: var(--text-primary);
+  margin-top: 24px;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.section p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  margin-bottom: 14px;
+}
+
+.section ul, .section ol {
+  padding-left: 24px;
+  margin-bottom: 16px;
+}
+
+.section li {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+.section li::marker { color: var(--accent); }
+
+.section strong {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.section a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+  transition: var(--transition);
+}
+
+.section a:hover { border-bottom-color: var(--accent); }
+
+/* Инфо-блок */
+.callout {
+  display: flex;
+  gap: 14px;
+  padding: 18px 22px;
+  background: rgba(0, 212, 255, 0.06);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: var(--radius-sm);
+  margin: 20px 0;
+}
+
+.callout__icon {
+  font-size: 1.25rem;
+  line-height: 1.4;
+  flex-shrink: 0;
+}
+
+.callout__text {
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.callout__text strong { color: var(--text-primary); }
+
+/* Таблица */
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin: 20px 0;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+  min-width: 560px;
+}
+
+.table th {
+  text-align: left;
+  padding: 14px 18px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-weight: 700;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.table td {
+  padding: 14px 18px;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.table tr:last-child td { border-bottom: none; }
+.table tr:hover td { background: rgba(255, 255, 255, 0.02); }
+
+/* Контактный блок */
+.contact-box {
+  background: linear-gradient(180deg, rgba(0, 212, 255, 0.08) 0%, rgba(123, 97, 255, 0.08) 100%);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  margin: 32px 0 12px;
+}
+
+.contact-box p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  margin-bottom: 12px;
+}
+
+.contact-box p:last-child { margin-bottom: 0; }
+
+.contact-box strong { color: var(--text-primary); }
+
+.contact-box a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+}
+
+.contact-box a:hover { border-bottom-color: var(--accent); }
+
+/* ============ FOOTER ============ */
+.footer {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  padding: 40px 0 24px;
+  margin-top: 60px;
+}
+
+.footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.footer__bottom a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.footer__bottom a:hover { color: var(--accent); }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 768px) {
+  .page { padding: 110px 0 60px; }
+  .toc__list { grid-template-columns: 1fr; }
+  .section h2 { font-size: 1.25rem; }
+  .section { margin-bottom: 32px; }
+  .contact-box { padding: 24px 22px; }
+}
+
+@media (max-width: 480px) {
+  .container { padding: 0 16px; }
+  .page { padding: 100px 0 50px; }
+  .page__title { font-size: 1.75rem; }
+  .toc { padding: 20px 22px; }
+  .footer__bottom { flex-direction: column; text-align: center; }
+}
+</style>
+
+<!-- ============ SCHEMA.ORG: BREADCRUMBS ============ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Главная",
+      "item": "https://ip-tv.tech/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Политика конфиденциальности",
+      "item": "https://ip-tv.tech/privacy.html"
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="header scrolled" id="header">
+  <div class="container header__inner">
+    <a href="/" class="logo">
+      <div class="logo__icon">▶</div>
+      TechTV
+    </a>
+    <a href="/" class="btn btn--secondary">← На главную</a>
+  </div>
+</header>
+
+<!-- ============ PAGE ============ -->
+<main class="page">
+  <div class="container">
+
+    <nav class="page__breadcrumbs" aria-label="Хлебные крошки">
+      <a href="/">Главная</a>
+      <span class="sep">·</span>
+      <span>Политика конфиденциальности</span>
+    </nav>
+
+    <h1 class="page__title">Политика конфиденциальности</h1>
+    <p class="page__updated">Последнее обновление: 15 сентября 2026 года</p>
+
+    <div class="content">
+
+      <!-- ОГЛАВЛЕНИЕ -->
+      <nav class="toc" aria-label="Содержание">
+        <div class="toc__title">Содержание</div>
+        <ul class="toc__list">
+          <li><a href="#section-1" class="toc__link"><span class="num">1.</span> Общие положения</a></li>
+          <li><a href="#section-2" class="toc__link"><span class="num">2.</span> Какие данные мы собираем</a></li>
+          <li><a href="#section-3" class="toc__link"><span class="num">3.</span> Цели обработки данных</a></li>
+          <li><a href="#section-4" class="toc__link"><span class="num">4.</span> Правовые основания</a></li>
+          <li><a href="#section-5" class="toc__link"><span class="num">5.</span> Cookie и аналитика</a></li>
+          <li><a href="#section-6" class="toc__link"><span class="num">6.</span> Передача данных третьим лицам</a></li>
+          <li><a href="#section-7" class="toc__link"><span class="num">7.</span> Хранение и защита данных</a></li>
+          <li><a href="#section-8" class="toc__link"><span class="num">8.</span> Ваши права</a></li>
+          <li><a href="#section-9" class="toc__link"><span class="num">9.</span> Изменения политики</a></li>
+          <li><a href="#section-10" class="toc__link"><span class="num">10.</span> Контакты</a></li>
+        </ul>
+      </nav>
+
+      <!-- 1. ОБЩИЕ ПОЛОЖЕНИЯ -->
+      <section class="section" id="section-1">
+        <h2 data-num="1.">Общие положения</h2>
+        <p>Настоящая Политика конфиденциальности (далее — «Политика») описывает, какие персональные данные собирает сервис <strong>TechTV</strong> (далее — «Сервис», «мы»), доступный по адресу <a href="https://ip-tv.tech">https://ip-tv.tech</a>, как эти данные используются, хранятся и защищаются.</p>
+        <p>Используя сайт и оставляя заявку через формы, вы подтверждаете, что ознакомились с настоящей Политикой и согласны с условиями обработки ваших персональных данных.</p>
+        <div class="callout">
+          <div class="callout__icon">💡</div>
+          <p class="callout__text"><strong>Кратко:</strong> мы собираем только те данные, которые нужны для связи с вами и настройки сервиса, не передаём их третьим лицам для рекламы и защищаем современными техническими средствами.</p>
+        </div>
+      </section>
+
+      <!-- 2. КАКИЕ ДАННЫЕ СОБИРАЕМ -->
+      <section class="section" id="section-2">
+        <h2 data-num="2.">Какие данные мы собираем</h2>
+        <p>Мы собираем две категории данных:</p>
+
+        <h3>2.1. Данные, которые вы предоставляете добровольно</h3>
+        <ul>
+          <li><strong>Имя</strong> — чтобы знать, как к вам обращаться.</li>
+          <li><strong>Телефон</strong> — для связи и консультации.</li>
+          <li><strong>Тип устройства</strong> (Smart TV, приставка, смартфон и т. д.) — чтобы заранее подготовить инструкцию по настройке.</li>
+          <li><strong>Мессенджеры и соцсети</strong> (Telegram, WhatsApp, VK, OK) — как удобный способ онлайн-связи.</li>
+          <li><strong>Email</strong> и <strong>дополнительные контакты</strong> — при обращении в чат поддержки.</li>
+          <li><strong>Текст сообщений</strong> — при использовании чата поддержки.</li>
+        </ul>
+
+        <h3>2.2. Данные, собираемые автоматически</h3>
+        <ul>
+          <li><strong>IP-адрес</strong> — для защиты от спама и аналитики.</li>
+          <li><strong>Данные браузера и устройства</strong> (User-Agent, разрешение экрана, язык).</li>
+          <li><strong>Технические cookie-файлы</strong> — для работы сайта и аналитики.</li>
+          <li><strong>Действия на сайте</strong> (клики, переходы, время визита) — через системы веб-аналитики.</li>
+        </ul>
+
+        <div class="callout">
+          <div class="callout__icon">🔒</div>
+          <p class="callout__text">Мы <strong>не собираем</strong> данные банковских карт, паспортные данные, биометрию и любую другую чувствительную информацию.</p>
+        </div>
+      </section>
+
+      <!-- 3. ЦЕЛИ ОБРАБОТКИ -->
+      <section class="section" id="section-3">
+        <h2 data-num="3.">Цели обработки данных</h2>
+        <p>Ваши данные используются исключительно для следующих целей:</p>
+        <ul>
+          <li><strong>Связь по заявке</strong> — специалист звонит или пишет вам, чтобы ответить на вопросы и помочь с подключением.</li>
+          <li><strong>Настройка сервиса</strong> — удалённая помощь в установке ПО на ваше устройство.</li>
+          <li><strong>Техническая поддержка</strong> — ответы на вопросы через чат и мессенджеры.</li>
+          <li><strong>Улучшение сервиса</strong> — анализ обезличенной статистики посещений для улучшения сайта и услуг.</li>
+          <li><strong>Информирование</strong> — только с вашего согласия, о новых функциях и акциях.</li>
+        </ul>
+        <p>Мы <strong>не используем</strong> ваши данные для навязчивой рекламы и <strong>не продаём</strong> их рекламным сетям.</p>
+      </section>
+
+      <!-- 4. ПРАВОВЫЕ ОСНОВАНИЯ -->
+      <section class="section" id="section-4">
+        <h2 data-num="4.">Правовые основания обработки</h2>
+        <p>Обработка персональных данных осуществляется в соответствии с:</p>
+        <ul>
+          <li><strong>Федеральным законом № 152-ФЗ</strong> «О персональных данных» (Российская Федерация);</li>
+          <li><strong>Законом Республики Беларусь № 99-З</strong> «О защите персональных данных»;</li>
+          <li><strong>Общим регламентом по защите данных (GDPR)</strong> — для пользователей из стран ЕС.</li>
+        </ul>
+        <p>Правовым основанием обработки является <strong>ваше добровольное согласие</strong>, выраженное путём заполнения форм на сайте, а также <strong>законный интерес</strong> в улучшении качества сервиса.</p>
+      </section>
+
+      <!-- 5. COOKIE И АНАЛИТИКА -->
+      <section class="section" id="section-5">
+        <h2 data-num="5.">Cookie и аналитика</h2>
+        <p>Для корректной работы сайта и анализа поведения пользователей мы используем <strong>cookie-файлы</strong> и системы веб-аналитики:</p>
+
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Сервис</th>
+                <th>Что собирает</th>
+                <th>Назначение</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Яндекс.Метрика</strong></td>
+                <td>IP, действия на сайте, данные браузера, записи Вебвизора</td>
+                <td>Анализ поведения, улучшение UX</td>
+              </tr>
+              <tr>
+                <td><strong>Google Analytics 4</strong></td>
+                <td>Анонимная статистика визитов и конверсий</td>
+                <td>Аналитика эффективности</td>
+              </tr>
+              <tr>
+                <td><strong>Технические cookie</strong></td>
+                <td>Настройки интерфейса, идентификатор сессии</td>
+                <td>Работа функций сайта и чата</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Что такое Вебвизор и зачем он нужен</h3>
+        <p>Вебвизор — это инструмент Яндекс.Метрики, который записывает видео действий посетителя на сайте: движения мыши, клики, прокрутку страницы. <strong>Поля ввода (имя, телефон, email) при этом маскируются</strong> — мы не видим, что именно вы вводите. Данные используются только для анализа удобства интерфейса.</p>
+
+        <h3>Как отказаться от cookie</h3>
+        <p>Вы можете отключить cookie в настройках браузера или воспользоваться <a href="https://yandex.ru/support/metrika/general/opt-out.html" target="_blank" rel="noopener">официальным блокировщиком Яндекс.Метрики</a>. Это не повлияет на возможность пользоваться основными функциями сайта.</p>
+      </section>
+
+      <!-- 6. ПЕРЕДАЧА ТРЕТЬИМ ЛИЦАМ -->
+      <section class="section" id="section-6">
+        <h2 data-num="6.">Передача данных третьим лицам</h2>
+        <p>Мы <strong>не передаём</strong> ваши персональные данные третьим лицам, за исключением следующих случаев:</p>
+        <ul>
+          <li><strong>Сервисы связи</strong> — данные передаются в Telegram-бот и внутреннюю CRM для обработки заявки специалистом.</li>
+          <li><strong>Аналитические сервисы</strong> — обезличенная статистика передаётся в Яндекс.Метрику и Google Analytics в соответствии с их собственными политиками конфиденциальности.</li>
+          <li><strong>Требование закона</strong> — если поступит официальный запрос от уполномоченных органов.</li>
+        </ul>
+        <p>Все подрядчики работают на условиях конфиденциальности и не имеют права использовать ваши данные в своих целях.</p>
+      </section>
+
+      <!-- 7. ХРАНЕНИЕ И ЗАЩИТА -->
+      <section class="section" id="section-7">
+        <h2 data-num="7.">Хранение и защита данных</h2>
+        <p>Мы принимаем следующие меры для защиты ваших данных:</p>
+        <ul>
+          <li><strong>HTTPS-шифрование</strong> — все данные передаются по защищённому протоколу.</li>
+          <li><strong>Ограниченный доступ</strong> — к данным имеют доступ только специалисты поддержки, работающие с вашей заявкой.</li>
+          <li><strong>Защищённое хранение</strong> — заявки хранятся в защищённых системах (Google Workspace, закрытые CRM).</li>
+          <li><strong>Регулярный аудит</strong> — мы периодически проверяем, кто и как обрабатывает данные.</li>
+        </ul>
+
+        <h3>Срок хранения</h3>
+        <p>Персональные данные хранятся не дольше, чем необходимо для целей обработки:</p>
+        <ul>
+          <li>Заявки — <strong>до 12 месяцев</strong> с момента обращения;</li>
+          <li>Переписка в чате — <strong>до 6 месяцев</strong>;</li>
+          <li>Аналитические данные — <strong>до 26 месяцев</strong> в соответствии с настройками по умолчанию Яндекс.Метрики и GA4.</li>
+        </ul>
+        <p>По вашему запросу данные удаляются досрочно.</p>
+      </section>
+
+      <!-- 8. ВАШИ ПРАВА -->
+      <section class="section" id="section-8">
+        <h2 data-num="8.">Ваши права</h2>
+        <p>В соответствии с применимым законодательством вы имеете право:</p>
+        <ul>
+          <li><strong>Получить информацию</strong> о том, какие ваши данные мы обрабатываем.</li>
+          <li><strong>Запросить исправление</strong> неточных или устаревших данных.</li>
+          <li><strong>Отозвать согласие</strong> на обработку персональных данных в любой момент.</li>
+          <li><strong>Потребовать удаления</strong> всех ваших данных (право на забвение).</li>
+          <li><strong>Обратиться с жалобой</strong> в надзорный орган: Роскомнадзор (РФ), Национальный центр защиты персональных данных (РБ) или соответствующий орган ЕС.</li>
+        </ul>
+        <p>Для реализации любого из этих прав напишите нам — контакты в разделе 10.</p>
+      </section>
+
+      <!-- 9. ИЗМЕНЕНИЯ ПОЛИТИКИ -->
+      <section class="section" id="section-9">
+        <h2 data-num="9.">Изменения политики</h2>
+        <p>Мы можем периодически обновлять настоящую Политику — например, при изменении законодательства или добавлении новых сервисов. Актуальная версия всегда доступна по адресу <a href="https://ip-tv.tech/privacy.html">https://ip-tv.tech/privacy.html</a>.</p>
+        <p>Дата последнего обновления указана в начале страницы. При существенных изменениях мы уведомим вас через всплывающее уведомление на сайте.</p>
+      </section>
+
+      <!-- 10. КОНТАКТЫ -->
+      <section class="section" id="section-10">
+        <h2 data-num="10.">Контакты</h2>
+        <p>По любым вопросам, связанным с обработкой персональных данных, вы можете связаться с нами:</p>
+
+        <div class="contact-box">
+          <p><strong>Сервис:</strong> TechTV</p>
+          <p><strong>Сайт:</strong> <a href="https://ip-tv.tech">https://ip-tv.tech</a></p>
+          <p><strong>Email:</strong> <a href="mailto:privacy@ip-tv.tech">privacy@ip-tv.tech</a></p>
+          <p><strong>Чат поддержки:</strong> <a href="/chat.html">открыть чат</a></p>
+          <p><strong>Telegram:</strong> <a href="https://t.me/techtv" target="_blank" rel="noopener">@techtv</a></p>
+        </div>
+
+        <p style="margin-top: 20px; font-size: 0.875rem; color: var(--text-muted);">Мы отвечаем на запросы, связанные с персональными данными, в течение 30 календарных дней.</p>
+      </section>
+
+    </div>
+  </div>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__bottom">
+      <div>© 2026 TechTV. Все права защищены.</div>
+      <div>
+        <a href="/">На главную</a>
+        &nbsp;·&nbsp;
+        <a href="/blog.html">Блог</a>
+        &nbsp;·&nbsp;
+        <a href="/chat.html">Чат</a>
+        &nbsp;·&nbsp;
+        <a href="/privacy.html">Политика конфиденциальности</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const header = document.getElementById('header');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 30) header.classList.add('scrolled');
+  else header.classList.remove('scrolled');
+});
+</script>
+
+</body>
+</html>
