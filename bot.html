@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Блог о IPTV и онлайн-кинотеатрах — TechTV | Гайды, инструкции, сравнения</title>
+<meta name="description" content="Полезные статьи об IPTV и онлайн-кинотеатрах: как выбрать провайдера, настроить на Smart TV, какая скорость интернета нужна для 4K. Гайды, инструкции и советы от экспертов TechTV.">
+<meta name="keywords" content="IPTV блог, онлайн-кинотеатр блог, как настроить IPTV, IPTV гайд, скорость интернета для IPTV, Smart TV настройка, новинки кино онлайн">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<link rel="canonical" href="https://ip-tv.tech/blog.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Блог о IPTV и онлайн-кинотеатрах — TechTV">
+<meta property="og:description" content="Полезные статьи об IPTV и онлайн-кинотеатрах: гайды, инструкции и советы от экспертов.">
+<meta property="og:url" content="https://ip-tv.tech/blog.html">
+<meta property="og:image" content="https://ip-tv.tech/og-blog.jpg">
+<meta property="og:site_name" content="TechTV">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Блог о IPTV и онлайн-кинотеатрах — TechTV">
+<meta name="twitter:description" content="Полезные статьи об IPTV и онлайн-кинотеатрах: гайды, инструкции и советы.">
+
+<!-- Favicon -->
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+
+<style>
+/* ============ RESET & BASE ============ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #12121a;
+  --bg-card: #1a1a24;
+  --bg-card-hover: #22222e;
+  --border: #2a2a3a;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0b0;
+  --text-muted: #6a6a7a;
+  --accent: #00d4ff;
+  --accent-glow: rgba(0, 212, 255, 0.4);
+  --gradient: linear-gradient(135deg, #00d4ff 0%, #7b61ff 100%);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: #00d4ff #0a0a0f;
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00d4ff 0%, #7b61ff 100%);
+  border-radius: 100px;
+  border: 2px solid var(--bg-primary);
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #33ddff 0%, #9b7bff 100%);
+  background-clip: padding-box;
+  border: 2px solid var(--bg-primary);
+}
+::-webkit-scrollbar-corner { background: var(--bg-primary); }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Roboto, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+body.modal-open { overflow: hidden; }
+
+.container { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+
+/* ============ HEADER ============ */
+.header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 16px 0;
+  transition: var(--transition);
+  backdrop-filter: blur(0px);
+}
+
+.header.scrolled {
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 0;
+}
+
+.header__inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.375rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.logo__icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: var(--gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+.nav { display: flex; gap: 32px; align-items: center; }
+
+.nav__link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  transition: var(--transition);
+  position: relative;
+}
+
+.nav__link:hover { color: var(--text-primary); }
+
+.nav__link::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -6px;
+  width: 0; height: 2px;
+  background: var(--gradient);
+  transition: width 0.3s ease;
+}
+
+.nav__link:hover::after { width: 100%; }
+
+.header__actions { display: flex; align-items: center; gap: 12px; }
+
+.burger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; }
+.burger span { display: block; width: 24px; height: 2px; background: var(--text-primary); border-radius: 2px; transition: var(--transition); }
+.burger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.burger.active span:nth-child(2) { opacity: 0; }
+.burger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ============ BUTTONS ============ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.btn--primary {
+  background: var(--gradient);
+  color: #0a0a0f;
+  box-shadow: 0 4px 24px var(--accent-glow);
+}
+
+.btn--primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px var(--accent-glow); }
+.btn--primary:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+
+.btn--secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+
+.btn--secondary:hover { background: var(--bg-card); border-color: var(--accent); }
+
+.btn--lg { padding: 18px 40px; font-size: 1.0625rem; }
+
+/* ============ BLOG HERO ============ */
+.blog-hero {
+  padding: 160px 0 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.blog-hero::before {
+  content: '';
+  position: absolute;
+  top: -30%; left: 50%;
+  transform: translateX(-50%);
+  width: 800px; height: 800px;
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.12), transparent 60%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.blog-hero__title {
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  margin-bottom: 16px;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  z-index: 1;
+}
+
+.blog-hero__text {
+  color: var(--text-secondary);
+  font-size: 1.125rem;
+  max-width: 640px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ============ BLOG LIST ============ */
+.blog-list { padding: 40px 0 100px; }
+
+.blog-list__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 28px;
+  margin-bottom: 60px;
+}
+
+.blog-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: var(--transition);
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+}
+
+.blog-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(0, 212, 255, 0.4);
+  background: var(--bg-card-hover);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.blog-card__image {
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16162a 50%, #0f0f1a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.blog-card__image::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(0, 212, 255, 0.15), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(123, 97, 255, 0.15), transparent 40%);
+}
+
+/* Реальная картинка вместо эмодзи */
+.blog-card__image--real::before { display: none; }
+
+.blog-card__image img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  transition: transform 0.5s ease;
+}
+
+.blog-card:hover .blog-card__image img {
+  transform: scale(1.05);
+}
+
+.blog-card__body { padding: 24px; display: flex; flex-direction: column; flex: 1; }
+
+.blog-card__tag {
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 100px;
+  font-size: 0.75rem;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 14px;
+  align-self: flex-start;
+}
+
+.blog-card__title { font-size: 1.25rem; margin-bottom: 12px; line-height: 1.3; }
+.blog-card__excerpt { color: var(--text-secondary); font-size: 0.9375rem; flex: 1; margin-bottom: 20px; }
+
+.blog-card__meta {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+/* ============ LOADING SKELETON ============ */
+.blog-skeleton {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.blog-skeleton__image {
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(90deg, #1a1a24 25%, #22222e 50%, #1a1a24 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.blog-skeleton__body { padding: 24px; }
+
+.blog-skeleton__line {
+  height: 12px;
+  background: linear-gradient(90deg, #1a1a24 25%, #22222e 50%, #1a1a24 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+.blog-skeleton__line--tag { width: 60px; height: 20px; border-radius: 100px; }
+.blog-skeleton__line--title { height: 18px; width: 90%; }
+.blog-skeleton__line--title2 { height: 18px; width: 60%; margin-bottom: 20px; }
+.blog-skeleton__line--excerpt { height: 12px; width: 100%; }
+.blog-skeleton__line--excerpt2 { height: 12px; width: 80%; }
+.blog-skeleton__line--meta { height: 10px; width: 40%; margin-top: 20px; }
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ============ EMPTY / ERROR STATE ============ */
+.blog-state {
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--text-secondary);
+}
+
+.blog-state__icon {
+  font-size: 3rem;
+  opacity: 0.4;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.blog-state__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.blog-state__text {
+  font-size: 0.9375rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* ============ PAGINATION ============ */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pagination__link {
+  min-width: 44px;
+  height: 44px;
+  padding: 0 14px;
+  border-radius: 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  transition: var(--transition);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.pagination__link:hover {
+  border-color: var(--accent);
+  color: var(--text-primary);
+  background: var(--bg-card-hover);
+}
+
+.pagination__link--active {
+  background: var(--gradient);
+  color: #0a0a0f;
+  border-color: transparent;
+  box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+.pagination__link--disabled {
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: default;
+}
+
+.pagination__dots {
+  min-width: 44px;
+  height: 44px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-weight: 600;
+  user-select: none;
+}
+
+/* ============ CTA ============ */
+.cta { padding: 100px 0; text-align: center; position: relative; overflow: hidden; }
+
+.cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(0, 212, 255, 0.15), transparent 60%);
+  pointer-events: none;
+}
+
+.cta__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  margin: 0 auto;
+  background: linear-gradient(180deg, rgba(0, 212, 255, 0.1) 0%, rgba(123, 97, 255, 0.1) 100%);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 24px;
+  padding: 64px 40px;
+}
+
+.cta__title { font-size: clamp(1.75rem, 3.5vw, 2.75rem); margin-bottom: 16px; }
+.cta__text { color: var(--text-secondary); font-size: 1.125rem; margin-bottom: 32px; }
+.cta__actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+/* ============ FOOTER ============ */
+.footer { background: var(--bg-secondary); border-top: 1px solid var(--border); padding: 64px 0 32px; }
+.footer__grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+.footer__brand { max-width: 320px; }
+.footer__text { color: var(--text-secondary); font-size: 0.9375rem; margin: 16px 0 24px; }
+.footer__socials { display: flex; gap: 12px; }
+
+.footer__social {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: var(--transition);
+  font-size: 1rem;
+}
+
+.footer__social:hover { background: var(--gradient); color: var(--bg-primary); border-color: transparent; transform: translateY(-3px); }
+
+.footer__title { font-size: 0.875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-primary); margin-bottom: 20px; }
+.footer__links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.footer__links a { color: var(--text-secondary); text-decoration: none; font-size: 0.9375rem; transition: var(--transition); }
+.footer__links a:hover { color: var(--accent); }
+
+.footer__bottom {
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+/* ============ MODAL ============ */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal.active { opacity: 1; visibility: visible; }
+
+.modal__overlay { position: absolute; inset: 0; background: rgba(5, 5, 10, 0.85); backdrop-filter: blur(8px); }
+
+.modal__dialog {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  background: linear-gradient(180deg, #16161f 0%, var(--bg-card) 100%);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px 40px 28px;
+  transform: translateY(20px) scale(0.98);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+}
+
+.modal.active .modal__dialog { transform: translateY(0) scale(1); }
+
+.modal__dialog::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--gradient);
+  border-radius: 20px 20px 0 0;
+  z-index: 2;
+}
+
+.modal__close {
+  position: absolute;
+  top: 14px; right: 14px;
+  width: 34px; height: 34px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 1.125rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  line-height: 1;
+  z-index: 3;
+}
+
+.modal__close:hover { background: var(--bg-card-hover); color: var(--text-primary); transform: rotate(90deg); }
+
+.modal__head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.modal__icon {
+  width: 48px; height: 48px;
+  min-width: 48px;
+  border-radius: 14px;
+  background: var(--gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.375rem;
+  box-shadow: 0 10px 30px var(--accent-glow);
+}
+
+.modal__title {
+  font-size: 1.25rem;
+  margin-bottom: 2px;
+  letter-spacing: -0.02em;
+}
+
+.modal__subtitle {
+  color: var(--text-secondary);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+.form__group { margin-bottom: 14px; }
+
+.form__label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.form__input {
+  width: 100%;
+  height: 46px;
+  padding: 0 14px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-size: 0.9375rem;
+  font-family: inherit;
+  transition: var(--transition);
+  outline: none;
+}
+
+.form__input::placeholder { color: var(--text-muted); }
+
+.form__input:focus {
+  border-color: var(--accent);
+  background: var(--bg-card-hover);
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.15);
+}
+
+.form__submit {
+  width: 100%;
+  margin-top: 8px;
+  height: 50px;
+}
+
+/* ============ LOGIN MODAL ============ */
+.login-modal .modal__dialog {
+  max-width: 440px;
+  padding: 32px 36px 28px;
+}
+
+.login-error {
+  display: none;
+  margin-bottom: 16px;
+  padding: 11px 14px;
+  background: rgba(255, 95, 87, 0.1);
+  border: 1px solid rgba(255, 95, 87, 0.35);
+  border-radius: 10px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #ff5f57;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.login-error.show {
+  display: block;
+  animation: shakeError 0.4s ease;
+}
+
+@keyframes shakeError {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+.login-note {
+  margin-top: 16px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.login-note a { color: var(--accent); text-decoration: none; }
+.login-note a:hover { text-decoration: underline; }
+
+/* ============ FLOATING CHAT BUTTON ============ */
+.chat-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1500;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--gradient);
+  color: #0a0a0f;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 32px var(--accent-glow), 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  text-decoration: none;
+}
+
+.chat-fab:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 12px 40px var(--accent-glow), 0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+.chat-fab:active { transform: scale(0.96); }
+
+.chat-fab__icon { font-size: 1.5rem; line-height: 1; }
+
+.chat-fab__badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 100px;
+  background: #ff3d5c;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 800;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 3px var(--bg-primary);
+  animation: pulseBadge 2s ease-in-out infinite;
+}
+
+.chat-fab__badge.show { display: flex; }
+
+@keyframes pulseBadge {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+/* ============ NOTIFICATION TOAST ============ */
+.chat-notify {
+  position: fixed;
+  top: 88px;
+  right: 24px;
+  z-index: 1600;
+  max-width: 360px;
+  background: linear-gradient(180deg, #1a1a24 0%, #12121a 100%);
+  border: 1px solid rgba(0, 212, 255, 0.4);
+  border-radius: var(--radius-sm);
+  padding: 16px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 212, 255, 0.1);
+  cursor: pointer;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  transform: translateX(120%);
+  pointer-events: none;
+}
+
+.chat-notify.show {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.chat-notify::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--gradient);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+.chat-notify__icon {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 12px;
+  background: var(--gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  color: #0a0a0f;
+  position: relative;
+}
+
+.chat-notify__count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 100px;
+  background: #ff3d5c;
+  color: #fff;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 3px #1a1a24;
+}
+
+.chat-notify__body {
+  flex: 1;
+  min-width: 0;
+  padding-right: 20px;
+}
+
+.chat-notify__title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.chat-notify__title::after {
+  content: 'Новое';
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  background: rgba(0, 212, 255, 0.15);
+  color: var(--accent);
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.chat-notify__text {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.chat-notify__close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  line-height: 1;
+}
+
+.chat-notify__close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 968px) {
+  .footer__grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .footer__brand { grid-column: 1 / -1; max-width: 100%; }
+  .blog-list__grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+}
+
+@media (max-width: 768px) {
+  .nav {
+    position: fixed;
+    top: 68px; left: 0; right: 0;
+    background: rgba(10, 10, 15, 0.98);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    padding: 32px 24px;
+    gap: 24px;
+    border-bottom: 1px solid var(--border);
+    transform: translateY(-120%);
+    transition: transform 0.3s ease;
+  }
+  .nav.active { transform: translateY(0); }
+  .nav__link { font-size: 1.125rem; }
+  .burger { display: flex; }
+  .header__actions .btn--secondary { display: none; }
+  .blog-list__grid { grid-template-columns: 1fr; }
+  .cta__inner { padding: 48px 24px; }
+  .modal__dialog { padding: 28px 22px 24px; }
+  .login-modal .modal__dialog { padding: 28px 22px 24px; }
+}
+
+@media (max-width: 480px) {
+  .container { padding: 0 16px; }
+  .footer__grid { grid-template-columns: 1fr; }
+  .footer__bottom { flex-direction: column; text-align: center; }
+  .pagination__link { min-width: 40px; height: 40px; font-size: 0.875rem; }
+  .pagination__dots { min-width: 40px; height: 40px; padding: 0 8px; }
+
+  .chat-fab {
+    bottom: 16px;
+    right: 16px;
+    width: 54px;
+    height: 54px;
+  }
+  .chat-fab__icon { font-size: 1.25rem; }
+
+  .chat-notify {
+    top: 76px;
+    left: 16px;
+    right: 16px;
+    max-width: none;
+  }
+}
+
+/* ============ SCROLL REVEAL ============ */
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+
+<!-- ============ SCHEMA.ORG: BLOG ============ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Блог TechTV — всё об IPTV и онлайн-кинотеатрах",
+  "description": "Полезные статьи об IPTV и онлайн-кинотеатрах: как выбрать провайдера, настроить на Smart TV, какая скорость интернета нужна для 4K.",
+  "url": "https://ip-tv.tech/blog.html",
+  "publisher": {
+    "@type": "Organization",
+    "name": "TechTV",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ip-tv.tech/logo.png"
+    }
+  },
+  "inLanguage": "ru-RU"
+}
+</script>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=112646663', 'ym');
+
+    ym(112646663, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/112646663" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PGS3E5P1WC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-PGS3E5P1WC');
+</script>
+  
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="/" class="logo">
+      <div class="logo__icon">▶</div>
+      TechTV
+    </a>
+
+    <nav class="nav" id="nav">
+      <a href="/#features" class="nav__link">Возможности</a>
+      <a href="/#devices" class="nav__link">Устройства</a>
+      <a href="/#pricing" class="nav__link">Тариф</a>
+      <a href="/#how" class="nav__link">Как подключить</a>
+      <a href="/blog.html" class="nav__link">Блог</a>
+      <a href="/chat.html" class="nav__link">Чат</a>
+      <a href="/#faq" class="nav__link">FAQ</a>
+    </nav>
+
+    <div class="header__actions">
+      <button type="button" class="btn btn--secondary" data-login-open>Войти</button>
+      <a href="/#pricing" class="btn btn--primary">Подать заявку</a>
+      <button class="burger" id="burger" aria-label="Меню">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ BLOG HERO ============ -->
+<section class="blog-hero">
+  <div class="container">
+    <h1 class="blog-hero__title">Блог о IPTV и онлайн-кинотеатрах</h1>
+    <p class="blog-hero__text">
+      Разбираемся в технологиях, сравниваем устройства и делимся лайфхаками для идеального просмотра
+    </p>
+  </div>
+</section>
+
+<!-- ============ BLOG LIST ============ -->
+<section class="blog-list">
+  <div class="container">
+    <div class="blog-list__grid" id="blogGrid">
+      <!-- Скелетоны для загрузки -->
+      <div class="blog-skeleton">
+        <div class="blog-skeleton__image"></div>
+        <div class="blog-skeleton__body">
+          <div class="blog-skeleton__line blog-skeleton__line--tag"></div>
+          <div class="blog-skeleton__line blog-skeleton__line--title"></div>
+          <div class="blog-skeleton__line blog-skeleton__line--title2"></div>
+          <div class="blog-skeleton__line blog-skeleton__line--excerpt"></div>
+          <div class="blog-skeleton__line blog-skeleton__line--excerpt2"></div>
+          <div class="blog-skeleton__line blog-skeleton__line--meta"></div>
+        </div>
+      </div>
+      <div class="blog-skeleton">
+        <div class="blog-skeleton__image"></div>
+        <div class="blog-skeleton__body">
+          <div class="blog-skeleton__line blog-skeleton__line--tag"></div>
+          <div class="blog-skeleton__line blog-skeleton__line--title"></div>
+          <div class="blog-skeleton__line blog-skeleton__line--title2"></div>
+          <div class="blog-skeleton__line blog-skeleton__line--excerpt"></div>
+          <div class="blog-skeleton__line blog-skeleton__line--excerpt2"></div>
+          <div class="blog-skeleton__line blog-skeleton__line--meta"></div>
+        </div>
+      </div>
+      <div class="blog-skeleton">
+        <div class="blog-skeleton__image"></div>
+        <div class="blog-skeleton__body">
+          <div class="blog-skeleton__line blog-skeleton__line--tag"></div>
+          <div class="blog-skeleton__line blog-skeleton__line--title"></div>
+          <div class="blog-skeleton__line blog-skeleton__line--title2"></div>
+          <div class="blog-skeleton__line blog-skeleton__line--excerpt"></div>
+          <div class="blog-skeleton__line blog-skeleton__line--excerpt2"></div>
+          <div class="blog-skeleton__line blog-skeleton__line--meta"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Пагинация (рендерится через JS) -->
+    <nav class="pagination" id="pagination" aria-label="Навигация по страницам блога"></nav>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta">
+  <div class="container">
+    <div class="cta__inner">
+      <h2 class="cta__title">Готовы попробовать TechTV?</h2>
+      <p class="cta__text">Оставьте заявку — специалист свяжется, ответит на вопросы и поможет установить сервис на любое устройство.</p>
+      <div class="cta__actions">
+        <a href="/#pricing" class="btn btn--primary btn--lg">Подать заявку</a>
+        <a href="/#faq" class="btn btn--secondary btn--lg">Читать FAQ</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="/" class="logo">
+          <div class="logo__icon">▶</div>
+          TechTV
+        </a>
+        <p class="footer__text">
+          IP-телевидение и онлайн-кинотеатр в одной подписке. 4 500+ каналов и 13 000 фильмов в 4K HDR.
+        </p>
+        <div class="footer__socials">
+          <a href="#" class="footer__social" aria-label="Telegram">✈</a>
+          <a href="#" class="footer__social" aria-label="YouTube">▶</a>
+          <a href="#" class="footer__social" aria-label="Instagram">◉</a>
+          <a href="#" class="footer__social" aria-label="VK">VK</a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="footer__title">Продукт</h4>
+        <ul class="footer__links">
+          <li><a href="/#features">Возможности</a></li>
+          <li><a href="/#pricing">Тариф</a></li>
+          <li><a href="/#devices">Устройства</a></li>
+          <li><a href="/blog.html">Блог</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer__title">Компания</h4>
+        <ul class="footer__links">
+          <li><a href="#">О нас</a></li>
+          <li><a href="/blog.html">Блог</a></li>
+          <li><a href="#">Партнёрам</a></li>
+          <li><a href="#">Вакансии</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer__title">Поддержка</h4>
+        <ul class="footer__links">
+          <li><a href="/#faq">FAQ</a></li>
+          <li><a href="/chat.html">Чат 24/7</a></li>
+          <li><a href="/blog.html">Инструкции</a></li>
+          <li><a href="#">Контакты</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <div>© <span id="currentYear"></span> TechTV. Все права защищены.</div>
+      <div>
+      <a href="/privacy.html" style="color: inherit; text-decoration: none;">Политика конфиденциальности</a>
+      </div>
+    </div>
+  </div>
+<script>
+(function() {
+  const yearEl = document.getElementById('currentYear');
+  if (yearEl) {
+    yearEl.textContent = new Date().getFullYear();
+  }
+})();
+</script>
+</footer>
+
+<!-- ============ MODAL ВХОДА ============ -->
+<div class="modal login-modal" id="loginModal" aria-hidden="true">
+  <div class="modal__overlay" data-login-close></div>
+  <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+
+    <button type="button" class="modal__close" data-login-close aria-label="Закрыть">✕</button>
+
+    <div class="modal__head">
+      <div class="modal__icon">🔐</div>
+      <div>
+        <h3 class="modal__title" id="loginTitle">Вход в личный кабинет</h3>
+        <p class="modal__subtitle">Введите логин и пароль, выданные при подключении.</p>
+      </div>
+    </div>
+
+    <form id="loginForm" novalidate>
+      <div class="login-error" id="loginError">Неверный логин или пароль</div>
+
+      <div class="form__group">
+        <label class="form__label" for="loginUsername">Логин</label>
+        <input class="form__input" type="text" id="loginUsername" name="username" placeholder="Ваш логин" autocomplete="username" required>
+      </div>
+
+      <div class="form__group">
+        <label class="form__label" for="loginPassword">Пароль</label>
+        <input class="form__input" type="password" id="loginPassword" name="password" placeholder="Ваш пароль" autocomplete="current-password" required>
+      </div>
+
+      <button type="submit" class="btn btn--primary btn--lg form__submit" id="loginSubmitBtn">
+        Войти
+      </button>
+
+      <p class="login-note">
+        Забыли пароль? Напишите в
+        <a href="/chat.html" target="_blank" rel="noopener">чат поддержки</a>
+        — поможем восстановить доступ.
+      </p>
+    </form>
+
+  </div>
+</div>
+
+<!-- ============ FLOATING CHAT BUTTON ============ -->
+<a href="/chat.html" target="_blank" rel="noopener" class="chat-fab" id="chatFab" aria-label="Открыть чат поддержки">
+  <span class="chat-fab__icon">💬</span>
+  <span class="chat-fab__badge" id="chatFabBadge">0</span>
+</a>
+
+<!-- ============ NOTIFICATION TOAST ============ -->
+<div class="chat-notify" id="chatNotify" role="alert" aria-live="polite">
+  <button class="chat-notify__close" id="chatNotifyClose" aria-label="Закрыть">✕</button>
+  <div class="chat-notify__icon">
+    💬
+    <span class="chat-notify__count" id="chatNotifyCount">1</span>
+  </div>
+  <div class="chat-notify__body">
+    <div class="chat-notify__title">Ответ поддержки</div>
+    <div class="chat-notify__text" id="chatNotifyText">У вас новое сообщение в чате.</div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   БЛОГ: загрузка статей из JSON + пагинация
+   ============================================================ */
+
+const POSTS_URL = '/blog/posts.json';
+const ARTICLES_PER_PAGE = 6;
+
+let allArticles = [];
+let currentPage = 1;
+let totalPages = 1;
+
+const blogGrid = document.getElementById('blogGrid');
+const paginationEl = document.getElementById('pagination');
+
+// ===== Утилита: безопасный HTML =====
+function escapeHtml(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// ===== Получить номер страницы из URL =====
+function getPageFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const p = parseInt(params.get('page'), 10);
+  if (!p || p < 1) return 1;
+  return p;
+}
+
+// ===== Загрузка статей =====
+async function loadArticles() {
+  try {
+    const response = await fetch(POSTS_URL, { cache: 'no-cache' });
+    if (!response.ok) throw new Error('HTTP ' + response.status);
+
+    const data = await response.json();
+    allArticles = Array.isArray(data.articles) ? data.articles : [];
+
+    // Сортируем: свежие сверху (по полю date формата YYYY-MM-DD)
+    allArticles.sort((a, b) => {
+      const da = new Date(a.date || 0).getTime();
+      const db = new Date(b.date || 0).getTime();
+      return db - da;
+    });
+
+    totalPages = Math.max(1, Math.ceil(allArticles.length / ARTICLES_PER_PAGE));
+
+    // Корректируем страницу, если она вне диапазона
+    currentPage = getPageFromUrl();
+    if (currentPage > totalPages) currentPage = totalPages;
+
+    renderPage(currentPage);
+    renderPagination(currentPage);
+
+  } catch (err) {
+    console.error('Ошибка загрузки статей:', err);
+    showError();
+  }
+}
+
+// ===== Рендер карточек текущей страницы =====
+function renderPage(page) {
+  const start = (page - 1) * ARTICLES_PER_PAGE;
+  const end = start + ARTICLES_PER_PAGE;
+  const items = allArticles.slice(start, end);
+
+  blogGrid.innerHTML = '';
+
+  if (items.length === 0) {
+    blogGrid.innerHTML = `
+      <div class="blog-state" style="grid-column: 1 / -1;">
+        <span class="blog-state__icon">📭</span>
+        <div class="blog-state__title">Статей пока нет</div>
+        <p class="blog-state__text">Скоро здесь появятся полезные материалы. Заглядывайте позже!</p>
+      </div>
+    `;
+    return;
+  }
+
+  const fragment = document.createDocumentFragment();
+  items.forEach(article => {
+    fragment.appendChild(createCard(article));
+  });
+  blogGrid.appendChild(fragment);
+
+  // Плавное появление карточек
+  requestAnimationFrame(() => {
+    blogGrid.querySelectorAll('.reveal').forEach((el, i) => {
+      setTimeout(() => el.classList.add('visible'), i * 70);
+    });
+  });
+}
+
+// ===== Создание одной карточки =====
+function createCard(article) {
+  const link = document.createElement('a');
+  link.className = 'blog-card reveal';
+  link.href = article.url || '#';
+
+  // Блок картинки: либо <img>, либо эмодзи
+  let imageBlock;
+  if (article.image) {
+    imageBlock = `
+      <div class="blog-card__image blog-card__image--real">
+        <img src="${escapeHtml(article.image)}"
+             alt="${escapeHtml(article.title || '')}"
+             loading="lazy">
+      </div>
+    `;
+  } else {
+    imageBlock = `
+      <div class="blog-card__image">${escapeHtml(article.emoji || '📄')}</div>
+    `;
+  }
+
+  link.innerHTML = `
+    ${imageBlock}
+    <div class="blog-card__body">
+      <span class="blog-card__tag">${escapeHtml(article.category || 'Статья')}</span>
+      <h2 class="blog-card__title">${escapeHtml(article.title || '')}</h2>
+      <p class="blog-card__excerpt">${escapeHtml(article.excerpt || '')}</p>
+      <div class="blog-card__meta">
+        <span>${escapeHtml(article.dateDisplay || '')}</span>
+        ${article.readTime ? '<span>·</span><span>' + escapeHtml(article.readTime) + '</span>' : ''}
+      </div>
+    </div>
+  `;
+
+  return link;
+}
+
+// ===== Рендер пагинации =====
+function renderPagination(current) {
+  paginationEl.innerHTML = '';
+
+  if (totalPages <= 1) return;
+
+  // Кнопка "назад"
+  const prev = document.createElement('a');
+  prev.className = 'pagination__link' + (current === 1 ? ' pagination__link--disabled' : '');
+  prev.textContent = '←';
+  prev.href = current > 1 ? '?page=' + (current - 1) : '#';
+  prev.setAttribute('aria-label', 'Предыдущая страница');
+  if (current === 1) {
+    prev.addEventListener('click', e => e.preventDefault());
+  }
+  paginationEl.appendChild(prev);
+
+  // Номера страниц (с умным сокращением)
+  const pages = getPageNumbers(current, totalPages);
+  pages.forEach(p => {
+    if (p === '...') {
+      const dots = document.createElement('span');
+      dots.className = 'pagination__dots';
+      dots.textContent = '…';
+      paginationEl.appendChild(dots);
+    } else {
+      const link = document.createElement('a');
+      link.className = 'pagination__link' + (p === current ? ' pagination__link--active' : '');
+      link.textContent = p;
+      link.href = '?page=' + p;
+      if (p === current) {
+        link.setAttribute('aria-current', 'page');
+      }
+      paginationEl.appendChild(link);
+    }
+  });
+
+  // Кнопка "вперёд"
+  const next = document.createElement('a');
+  next.className = 'pagination__link' + (current === totalPages ? ' pagination__link--disabled' : '');
+  next.textContent = '→';
+  next.href = current < totalPages ? '?page=' + (current + 1) : '#';
+  next.setAttribute('aria-label', 'Следующая страница');
+  if (current === totalPages) {
+    next.addEventListener('click', e => e.preventDefault());
+  }
+  paginationEl.appendChild(next);
+}
+
+// ===== Умное сокращение списка страниц =====
+function getPageNumbers(current, total) {
+  const delta = 1;
+  const pages = [];
+
+  if (total <= 7) {
+    for (let i = 1; i <= total; i++) pages.push(i);
+    return pages;
+  }
+
+  pages.push(1);
+
+  if (current > 3) pages.push('...');
+
+  const start = Math.max(2, current - delta);
+  const end = Math.min(total - 1, current + delta);
+
+  for (let i = start; i <= end; i++) pages.push(i);
+
+  if (current < total - 2) pages.push('...');
+
+  pages.push(total);
+  return pages;
+}
+
+// ===== Ошибка загрузки =====
+function showError() {
+  blogGrid.innerHTML = `
+    <div class="blog-state" style="grid-column: 1 / -1;">
+      <span class="blog-state__icon">⚠️</span>
+      <div class="blog-state__title">Не удалось загрузить статьи</div>
+      <p class="blog-state__text">Проверьте подключение к интернету или обновите страницу.</p>
+    </div>
+  `;
+  paginationEl.innerHTML = '';
+}
+
+// ===== Кнопка "наверх" при смене страницы =====
+// (нужно, если пользователь листает без перезагрузки)
+window.addEventListener('popstate', () => {
+  const page = getPageFromUrl();
+  if (page !== currentPage) {
+    currentPage = page;
+    renderPage(currentPage);
+    renderPagination(currentPage);
+  }
+});
+
+// ===== Запуск =====
+loadArticles();
+
+/* ============================================================
+   HEADER + MOBILE MENU + LOGIN MODAL + CHAT (без изменений)
+   ============================================================ */
+
+const header = document.getElementById('header');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 30) {
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
+  }
+});
+
+const burger = document.getElementById('burger');
+const nav = document.getElementById('nav');
+
+burger.addEventListener('click', () => {
+  burger.classList.toggle('active');
+  nav.classList.toggle('active');
+});
+
+nav.querySelectorAll('.nav__link').forEach(link => {
+  link.addEventListener('click', () => {
+    burger.classList.remove('active');
+    nav.classList.remove('active');
+  });
+});
+
+// ===== МОДАЛ ВХОДА =====
+const loginModal = document.getElementById('loginModal');
+const loginForm = document.getElementById('loginForm');
+const loginError = document.getElementById('loginError');
+const loginSubmitBtn = document.getElementById('loginSubmitBtn');
+
+function openLoginModal() {
+  loginModal.classList.add('active');
+  loginModal.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('modal-open');
+  loginError.classList.remove('show');
+  loginForm.reset();
+  const user = document.getElementById('loginUsername');
+  const pass = document.getElementById('loginPassword');
+  user.style.borderColor = '';
+  pass.style.borderColor = '';
+  setTimeout(() => user.focus(), 300);
+}
+
+function closeLoginModal() {
+  loginModal.classList.remove('active');
+  loginModal.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('modal-open');
+}
+
+document.querySelectorAll('[data-login-open]').forEach(btn => {
+  btn.addEventListener('click', openLoginModal);
+});
+
+document.querySelectorAll('[data-login-close]').forEach(el => {
+  el.addEventListener('click', closeLoginModal);
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && loginModal.classList.contains('active')) {
+    closeLoginModal();
+  }
+});
+
+loginForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const user = document.getElementById('loginUsername');
+  const pass = document.getElementById('loginPassword');
+
+  user.style.borderColor = '';
+  pass.style.borderColor = '';
+  loginError.classList.remove('show');
+
+  if (!user.value.trim() || !pass.value.trim()) {
+    if (!user.value.trim()) user.style.borderColor = '#ff5f57';
+    if (!pass.value.trim()) pass.style.borderColor = '#ff5f57';
+    return;
+  }
+
+  const originalText = loginSubmitBtn.innerHTML;
+  loginSubmitBtn.disabled = true;
+  loginSubmitBtn.innerHTML = 'Проверяем...';
+
+  setTimeout(() => {
+    loginSubmitBtn.disabled = false;
+    loginSubmitBtn.innerHTML = originalText;
+
+    loginError.classList.remove('show');
+    void loginError.offsetWidth;
+    loginError.classList.add('show');
+
+    pass.value = '';
+    pass.focus();
+  }, 700);
+});
+
+// ===== ЧАТ: плавающая кнопка + уведомления =====
+(function() {
+  const CHAT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzp_AuStIiDbYe7db98WjM-BqMZdgxrQdVkH6LgpX6x3Wb2JfXAqQafcmEBjlosZRY/exec';
+  const LAST_READ_KEY = 'techtv_last_read_ts';
+  const POLL_INTERVAL = 8000;
+
+  let userID = localStorage.getItem('chat_user_id');
+  if (!userID) {
+    userID = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
+    localStorage.setItem('chat_user_id', userID);
+  }
+
+  const fab = document.getElementById('chatFab');
+  const fabBadge = document.getElementById('chatFabBadge');
+  const notify = document.getElementById('chatNotify');
+  const notifyCount = document.getElementById('chatNotifyCount');
+  const notifyText = document.getElementById('chatNotifyText');
+  const notifyClose = document.getElementById('chatNotifyClose');
+
+  if (!fab || !notify) return;
+
+  function getLastReadTs() {
+    return localStorage.getItem(LAST_READ_KEY) || '1970-01-01T00:00:00.000Z';
+  }
+
+  function countUnread(messages) {
+    if (!Array.isArray(messages)) return 0;
+    const lastRead = new Date(getLastReadTs()).getTime();
+    return messages.filter(m => {
+      if (m.userID !== 'manager') return false;
+      return new Date(m.timestamp).getTime() > lastRead;
+    }).length;
+  }
+
+  function updateUI(unreadCount, lastMessage) {
+    if (unreadCount > 0) {
+      const display = unreadCount > 99 ? '99+' : String(unreadCount);
+      fabBadge.textContent = display;
+      fabBadge.classList.add('show');
+      notifyCount.textContent = display;
+      notifyText.textContent = lastMessage && lastMessage.message
+        ? lastMessage.message.slice(0, 120)
+        : 'У вас новое сообщение в чате поддержки.';
+      notify.classList.add('show');
+    } else {
+      fabBadge.classList.remove('show');
+      notify.classList.remove('show');
+    }
+  }
+
+  async function pollMessages() {
+    try {
+      const url = CHAT_ENDPOINT + '?userID=' + encodeURIComponent(userID);
+      const r = await fetch(url, { cache: 'no-cache' });
+      if (!r.ok) return;
+      const data = await r.json();
+      if (!data || data.error) return;
+      const messages = data.messages || [];
+      const unreadCount = countUnread(messages);
+      const managerMsgs = messages.filter(m => m.userID === 'manager');
+      const lastMessage = managerMsgs.length ? managerMsgs[managerMsgs.length - 1] : null;
+      updateUI(unreadCount, lastMessage);
+    } catch (e) {}
+  }
+
+  notifyClose.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    notify.classList.remove('show');
+  });
+
+  notify.addEventListener('click', function(e) {
+    if (e.target.closest('.chat-notify__close')) return;
+    window.open('/chat.html', '_blank', 'noopener');
+  });
+
+  window.addEventListener('storage', function(e) {
+    if (e.key === LAST_READ_KEY) pollMessages();
+  });
+
+  window.addEventListener('focus', pollMessages);
+
+  pollMessages();
+  setInterval(pollMessages, POLL_INTERVAL);
+})();
+</script>
+
+</body>
+</html>
